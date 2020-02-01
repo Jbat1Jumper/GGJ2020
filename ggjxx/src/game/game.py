@@ -1,3 +1,5 @@
+from . import cell
+
 
 UP    = "UP"
 DOWN  = "DOWN"
@@ -9,9 +11,7 @@ class Map:
     def __init__(self, w, h):
         self.width = w
         self.height = h
-        self.objects = [[None for _ in range(w)] for _ in range(h)]
-        self.v_walls = [[False for _ in range(w-1)] for _ in range(h-1)]
-        self.h_walls = [[False for _ in range(w-1)] for _ in range(h-1)]
+        self.cells = [[cell() for _ in range(w)] for _ in range(h)]
 
     def validate_coords(self, x, y):
         assert 0 <= x and x < self.width, "coord x ouf of bounds"
@@ -25,11 +25,11 @@ class Map:
 
     def get_object(self, x, y):
         validate_coords(x, y)
-        return objects[y][x]
+        return self.cells[y][x]
 
     def set_object(self, x, y, o):
         validate_coords(x, y)
-        objects[y][x] = o
+        self.cells[y][x] = o
 
     def has_wall(self, x, y, direction):
         validate_coords(x, y)

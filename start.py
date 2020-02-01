@@ -3,7 +3,8 @@ import click
 from ggjxx import settings
 from ggjxx.src.TerminalUI.tui import Tui
 from ggjxx.src.graphiUI.gui import Gui
-from ggjxx.src.game.Cell import Cell
+from ggjxx.src.game.cell import Cell
+from ggjxx.src.game.game import Game
 
 @click.group()
 def cli():
@@ -23,6 +24,10 @@ def gui():
     t.init()
     t.run()
     t.teardown()
+
+@cli.command(help="Prueba de Game")
+def game():
+    g = Game()
 
 
 @cli.command(help="Prueba de Cell")
