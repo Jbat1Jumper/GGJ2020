@@ -74,7 +74,7 @@ class Tui:
 
     def initGame(self):
         robots = [Robot(1, 2)]
-        map = Map(8, 8, robots)
+        map = Map(8, 8, robots, 0,7)
         map.get_cell(0,0).setAvailableDirections([DOWN])
         map.get_cell(0,1).setAvailableDirections([DOWN,UP])
         map.get_cell(0,2).setAvailableDirections([UP,RIGHT])

@@ -2,11 +2,13 @@ from .cell import Cell
 from .constants import UP,DOWN,RIGHT,LEFT
 
 class Map:
-    def __init__(self, w, h, robots):
+    def __init__(self, w, h, robots, startX,startY):
         self.width = w
         self.height = h
         self.robots = robots
         self.cells = [[Cell() for _ in range(w)] for _ in range(h)]
+        self.startX = startX
+        self.startY = startY
 
     def get_robots(self):
         return self.robots
