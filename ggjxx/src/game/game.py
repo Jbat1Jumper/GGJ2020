@@ -9,7 +9,7 @@ class Map:
         self.cells = [[Cell() for _ in range(w)] for _ in range(h)]
 
     def get_robots(self):
-        return self.get_robots()
+        return self.robots
 
     def getHeight(self):
         return self.height
