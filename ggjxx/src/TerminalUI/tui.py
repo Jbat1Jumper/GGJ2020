@@ -131,8 +131,8 @@ class Tui:
         map.get_cell(6,5).setAvailableDirections([LEFT,RIGHT,DOWN])
         map.get_cell(6,6).setAvailableDirections([UP,RIGHT])
         map.get_cell(6,7).setAvailableDirections([RIGHT,LEFT])
-        map.get_cell(7,0).setAvailableDirections([LEFT])
-        map.get_cell(7,1).setAvailableDirections([DOWN])
+        map.get_cell(7,0).setAvailableDirections([DOWN])
+        map.get_cell(7,1).setAvailableDirections([DOWN,UP])
         map.get_cell(7,2).setAvailableDirections([UP,DOWN])
         map.get_cell(7,3).setAvailableDirections([UP,LEFT])
         map.get_cell(7,4).setAvailableDirections([DOWN])
@@ -140,6 +140,15 @@ class Tui:
         map.get_cell(7,6).setAvailableDirections([LEFT])
         map.get_cell(7,7).setAvailableDirections([LEFT])
 
+        map.get_cell(1,4).setOnFire()
+        map.get_cell(5,0).setOnFire()
+        map.get_cell(7,4).setOnFire()
+        map.get_cell(0,0).putRadiation()
+        map.get_cell(4,7).putRadiation()
+        map.get_cell(3,3).putRadiation()
+        map.get_cell(6,4).putRadiation()
+        map.get_cell(7,7).putRadiation()
+        map.get_cell(6,1).putRadiation()
 
         max_turns = 10
         self.gameState = Game(map, max_turns)
