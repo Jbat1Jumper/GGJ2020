@@ -1,8 +1,8 @@
 #! python
 import click
 from ggjxx import settings
-from ggjxx.src.TerminalUI.tui import Tui
-from ggjxx.src.graphiUI.gui import Gui
+from ggjxx.src.TerminalUI import Tui
+from ggjxx.src.graphUI import Gui
 
 @click.group()
 def cli():
