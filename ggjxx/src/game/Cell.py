@@ -17,7 +17,7 @@ class Cell:
         self._hasFire = True
 
     def putOutFire(self):
-        self._hasFire = True
+        self._hasFire = False
 
     def hasRadiation(self):
         return self._hasRadiation
@@ -54,4 +54,3 @@ class Cell:
                 self._canGoLeft = True
             if direction == RIGHT:
                 self._canGoRight = True
-            return False;
