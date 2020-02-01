@@ -1,4 +1,4 @@
-from ggjxx.src.game.game import UP,DOWN,RIGHT,LEFT
+from .game import UP,DOWN,RIGHT,LEFT
 
 class Cell:
     def __init__(self):
