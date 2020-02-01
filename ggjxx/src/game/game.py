@@ -1,11 +1,5 @@
 from . import cell
-
-
-UP    = "UP"
-DOWN  = "DOWN"
-LEFT  = "LEFT"
-RIGHT = "RIGHT"
-
+from .constants import UP,DOWN,RIGHT,LEFT
 
 class Map:
     def __init__(self, w, h):
