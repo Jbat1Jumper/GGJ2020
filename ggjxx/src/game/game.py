@@ -131,7 +131,7 @@ class Game:
 
         r = self.controlled_robot
         if self.map.getCell(r.x, r.y).canGo(UP):
-            r.y += 1
+            r.y -= 1
 
     def robot_action(self):
         pass
@@ -143,6 +143,9 @@ class Game:
 
     def willShutdown(self):
         return self.turns_left < 0
+
+    def terminate(self):
+        self.turns_left = -1
 
 
 class Robot:

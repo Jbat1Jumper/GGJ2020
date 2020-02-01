@@ -1,5 +1,5 @@
 from ..game.game import Game, Map, Robot
-from ..game.constants import UP, DOWN, LEFT, RIGHT, UP_KEY_CHAR, DOWN_KEY_CHAR, RIGHT_KEY_CHAR, LEFT_KEY_CHAR
+from ..game.constants import *
 from ..input.getch import _Getch
 
 class Tui:
@@ -36,7 +36,7 @@ class Tui:
             print(lines[2])
 
 
-    def renderCell(self, cell, isRobotInCell):
+    def renderCell(self, cell, robot):
         if cell.canGo(UP):
             line1 = '     '
         else:
@@ -74,7 +74,7 @@ class Tui:
 
     def initGame(self):
         robots = [Robot(1, 2)]
-        map = Map(4, 3, None, robots)
+        map = Map(4, 3, robots)
         map.get_cell(0,0).setAvailableDirections([DOWN])
         map.get_cell(0,1).setAvailableDirections([DOWN,UP])
         map.get_cell(0,2).setAvailableDirections([RIGHT,UP])
@@ -107,4 +107,6 @@ class Tui:
             self.gameState.go_right()
         if (key_pressed == LEFT_KEY_CHAR):
             self.gameState.go_left()
+        if (key_pressed == QUIT_KEY_CHAR):
+            self.gameState.terminate()
 
