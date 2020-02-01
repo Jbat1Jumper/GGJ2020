@@ -2,10 +2,14 @@ from .cell import Cell
 from .constants import UP,DOWN,RIGHT,LEFT
 
 class Map:
-    def __init__(self, w, h):
+    def __init__(self, w, h, robots):
         self.width = w
         self.height = h
+        self.robots = robots
         self.cells = [[Cell() for _ in range(w)] for _ in range(h)]
+
+    def get_robots(self):
+        return self.robots
 
     def getHeight(self):
         return self.height
@@ -76,6 +80,9 @@ class Game:
 
     def get_map(self):
         return self.map
+
+    def get_controlled_robot(self):
+        return self.controlled_robot
     
     def won(self):
         # check win condition
@@ -92,19 +99,23 @@ class Game:
         pass
 
     def is_robot_being_controlled(self):
-        pass
+        return self.controlled_robot != None
 
     def go_left(self):
-        pass
+        if (self.is_robot_being_controlled()):
+            self.controlled_robot.setX(self.controlled_robot.getX() - 1)
 
     def go_right(self):
-        pass
+        if (self.is_robot_being_controlled()):
+            self.controlled_robot.setX(self.controlled_robot.getX() + 1)
 
     def go_down(self):
-        pass
+        if (self.is_robot_being_controlled()):
+            self.controlled_robot.setY(self.controlled_robot.getY() + 1)
 
     def go_up(self):
-        pass
+        if (self.is_robot_being_controlled()):
+            self.controlled_robot.setY(self.controlled_robot.getY() - 1)
 
     def robot_action(self):
         pass
@@ -113,3 +124,24 @@ class Game:
         pass
 
 
+class Robot:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.name = '_'
+        self.busy = False
+
+    def action(self, map):
+        pass
+
+    def getX(self):
+        return self.x
+
+    def getY(self):
+        return self.y
+
+    def setX(self, _x):
+        self.x = _x
+
+    def setY(self, _y):
+        self.y = _y
