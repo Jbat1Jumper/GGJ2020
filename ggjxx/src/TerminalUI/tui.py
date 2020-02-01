@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 from ..game.game import Game, Map, Robot
-from ..game.constants import UP_KEY_CHAR, DOWN_KEY_CHAR, RIGHT_KEY_CHAR, LEFT_KEY_CHAR
+from ..game.constants import UP, DOWN, LEFT, RIGHT, UP_KEY_CHAR, DOWN_KEY_CHAR, RIGHT_KEY_CHAR, LEFT_KEY_CHAR
 from ..input.getch import _Getch
-=======
-from ..game.game import Game, Map
-from ..game.constants import UP,DOWN,LEFT,RIGHT
->>>>>>> 63d03c490bd15c222877e2ba22f4e8f86f0d7f5b
 
 class Tui:
 
