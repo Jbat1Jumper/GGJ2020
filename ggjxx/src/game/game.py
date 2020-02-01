@@ -145,6 +145,8 @@ class Game:
         return self.turns_left < 0
 
     def terminate(self):
+        print('exit by terminate')
+        exit()
         self.turns_left = -1
 
 
