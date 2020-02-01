@@ -37,18 +37,24 @@ class Tui:
 
 
     def renderCell(self, cell, robot):
-        if cell.canGo(UP):
-            line1 = '     '
-        else:
-            line1 = ' --- '
         if cell.canGo(LEFT):
+            line1 = ' '
             line2 = ' '
+            line3 = ' '
         else:
+            line1 = '|'
             line2 = '|'
-        if cell.canGo(DOWN):
-            line3 = '     '
+            line3 = '|'
+
+        if cell.canGo(UP):
+            line1 += '   '
         else:
-            line3 = ' --- '
+            line1 += '---'
+
+        if cell.canGo(DOWN):
+            line3 += '   '
+        else:
+            line3 += '---'
 
         if (robot):
             line2 += 'X'
@@ -66,9 +72,13 @@ class Tui:
             line2 += ' '
 
         if cell.canGo(RIGHT):
+            line1 += ' '
             line2 += ' '
+            line3 += ' '
         else:
+            line1 += '|'
             line2 += '|'
+            line3 += '|'
 
         return (line1, line2, line3)
 
