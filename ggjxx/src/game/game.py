@@ -131,11 +131,11 @@ class Game:
         allCells = [center]
         minX = max(x-1,0)
         maxX = min(x+1,Map.getWidth()-1)
-        miny = max(y-1,0)
-        maxy = min(y+1,Map.getHeight()-1)
+        minY = max(y-1,0)
+        maxY = min(y+1,Map.getHeight()-1)
 
         for _x in range(minX,maxX):
-            for _y in range (miny,maxy)
+            for _y in range (minY,maxY):
                 allCells.append(self.map.getCell(_x,_y))
 
         return allCells
