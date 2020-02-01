@@ -99,19 +99,23 @@ class Game:
         pass
 
     def is_robot_being_controlled(self):
-        pass
+        return self.controlled_robot != None
 
     def go_left(self):
-        pass
+        if (self.is_robot_being_controlled()):
+            self.controlled_robot.setX(self.controlled_robot.getX() - 1)
 
     def go_right(self):
-        pass
+        if (self.is_robot_being_controlled()):
+            self.controlled_robot.setX(self.controlled_robot.getX() + 1)
 
     def go_down(self):
-        pass
+        if (self.is_robot_being_controlled()):
+            self.controlled_robot.setY(self.controlled_robot.getY() + 1)
 
     def go_up(self):
-        pass
+        if (self.is_robot_being_controlled()):
+            self.controlled_robot.setY(self.controlled_robot.getY() - 1)
 
     def robot_action(self):
         pass
@@ -129,4 +133,15 @@ class Robot:
 
     def action(self, map):
         pass
-    
+
+    def getX(self):
+        return self.x
+
+    def getY(self):
+        return self.y
+
+    def setX(self, _x):
+        self.x = _x
+
+    def setY(self, _y):
+        self.y = _y
