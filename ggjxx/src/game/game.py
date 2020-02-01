@@ -22,6 +22,12 @@ class Map:
     def getCell(self, x, y):
         return self.cells[y][x]
 
+    def getStartingX(self):
+        return self.startX
+
+    def getStartingY(self):
+        return self.startY
+
     def validate_coords(self, x, y):
         assert 0 <= x and x < self.width, "coord x ouf of bounds"
         assert 0 <= y and y < self.height, "coord y out of bounds"
@@ -116,33 +122,31 @@ class Game:
     def checkHazards(self, robot):
         xPosition = robot.getX()
         yPosition = robot.getY()
-        cells = self.getAdjacentCells(xPosition,yPosition)
+        cells = self.getAdjacentCells(xPosition, yPosition)
         for cell in cells:
             if cell.hasRadiation():
                 self.killRobot(robot)
-                return
             if cell.hasFire():
                 self.killRobot(robot)
-                return
 
 
     def getAdjacentCells(self,x,y):
         center = self.map.getCell(x,y)
         allCells = [center]
         minX = max(x-1,0)
-        maxX = min(x+1,Map.getWidth()-1)
+        maxX = min(x+1,self.map.getWidth()-1)
         minY = max(y-1,0)
-        maxY = min(y+1,Map.getHeight()-1)
+        maxY = min(y+1,self.map.getHeight()-1)
 
-        for _x in range(minX,maxX):
-            for _y in range (minY,maxY):
+        for _x in range(minX,maxX+1):
+            for _y in range (minY,maxY+1):
                 allCells.append(self.map.getCell(_x,_y))
 
         return allCells
 
     def killRobot(self, robot):
-        robot.setX(map.startX)
-        robot.setY(map.startY)
+        robot.setX(self.map.getStartingX())
+        robot.setY(self.map.getStartingY())
 
 
     def robot_action(self):
