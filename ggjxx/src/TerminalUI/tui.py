@@ -1,3 +1,5 @@
+from ..game.game import Game
+
 class Tui:
 
     def init(self):
