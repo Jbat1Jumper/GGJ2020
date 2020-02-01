@@ -18,7 +18,7 @@ class Map:
         return self.width
 
     def getCell(self, x, y):
-        return self.cells[x][y]
+        return self.cells[y][x]
 
     def validate_coords(self, x, y):
         assert 0 <= x and x < self.width, "coord x ouf of bounds"
@@ -89,39 +89,55 @@ class Game:
         return False
 
     def lost(self):
-        # check lose condition
-        return True
+        return self.turns_left > 0
 
     def available_robots(self):
-        pass
+        return filter(lambda r: not r.busy, self.map.get_robots())
 
     def choose_robot(self, robot):
-        pass
+        self.choose_robot = robot
 
     def is_robot_being_controlled(self):
         return self.controlled_robot != None
 
     def go_left(self):
-        if (self.is_robot_being_controlled()):
-            self.controlled_robot.setX(self.controlled_robot.getX() - 1)
+        if not self.is_robot_being_controlled():
+            return
+
+        r = self.controlled_robot
+        if self.map.getCell(r.x, r.y).canGo(LEFT):
+            r.x -= 1
 
     def go_right(self):
-        if (self.is_robot_being_controlled()):
-            self.controlled_robot.setX(self.controlled_robot.getX() + 1)
+        if not self.is_robot_being_controlled():
+            return
+
+        r = self.controlled_robot
+        if self.map.getCell(r.x, r.y).canGo(RIGHT):
+            r.x += 1
 
     def go_down(self):
-        if (self.is_robot_being_controlled()):
-            self.controlled_robot.setY(self.controlled_robot.getY() + 1)
+        if not self.is_robot_being_controlled():
+            return
+
+        r = self.controlled_robot
+        if self.map.getCell(r.x, r.y).canGo(DOWN):
+            r.y += 1
 
     def go_up(self):
-        if (self.is_robot_being_controlled()):
-            self.controlled_robot.setY(self.controlled_robot.getY() - 1)
+        if not self.is_robot_being_controlled():
+            return
+
+        r = self.controlled_robot
+        if self.map.getCell(r.x, r.y).canGo(UP):
+            r.y += 1
 
     def robot_action(self):
         pass
 
     def end_turn(self):
-        pass
+        self.turns_left -= 1
+        self.controlled_robot = None
 
 
 class Robot:
