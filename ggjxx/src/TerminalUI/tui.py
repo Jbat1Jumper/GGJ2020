@@ -1,4 +1,5 @@
 from ..game.game import Game, Map
+from ..game.constants import UP,DOWN,LEFT,RIGHT
 
 class Tui:
 
@@ -23,7 +24,7 @@ class Tui:
             for y in range(map.getWidth()):
                 cell = map.getCell(x, y)
                 # newLines = self.renderCell(cell, robot.isInCell(x, y))
-                newLines = self.renderCell(cell, True)
+                newLines = self.renderCell(cell, False)
                 lines[0] += newLines[0]
                 lines[1] += newLines[1]
                 lines[2] += newLines[2]
@@ -32,9 +33,18 @@ class Tui:
             print(lines[2])
 
     def renderCell(self, cell, isRobotInCell):
-        line1 = ' --- '
-        line2 = '|'
-        line3 = ' --- '
+        if (cell.canGo(UP)):
+            line1 = '     '
+        else:
+            line1 = ' --- '
+        if (cell.canGo(LEFT)):
+            line2 = '|'
+        else:
+            line2 = ' '
+        if cell.canGo(DOWN):
+            line3 = ' --- '
+        else:
+            line3 = '     '
 
         if (isRobotInCell):
             line2 += 'X'
@@ -51,11 +61,17 @@ class Tui:
         else:
             line2 += ' '
 
-        line2 += '|'
+        if cell.canGo(RIGHT):
+            line2 += '|'
+        else:
+            line2 += ' '
 
         return (line1, line2, line3)
 
     def initGame(self):
-        map = Map(15, 5)
+        map = Map(10, 5)
+        map.get_cell(0,0).setAvailableDirections([])
+        map.get_cell(1,0).setOnFire()
+
         max_turns = 10
         self.gameState = Game(map, max_turns)
