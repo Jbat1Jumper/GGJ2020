@@ -1,9 +1,9 @@
-from ..game.game import Game
+from ..game.game import Game, Map
 
 class Tui:
 
     def init(self):
-        self.gameState = Game()
+        self.initGame()
         self.render()
         pass
 
@@ -18,9 +18,9 @@ class Tui:
     def render(self):
         map = self.gameState.get_map()
         robot = self.gameState.get_robot()
-        for x in xrange(1, map.getHeight()):
+        for x in range(map.getHeight()):
             lines = ('', '', '')
-            for y in xrange(1, map.getWidth()):
+            for y in range(map.getWidth()):
                 cell = map.getCell(x, y)
                 newLines = self.renderCell(cell, robot.isInCell(x, y))
                 lines[0].append(newLines[0])
@@ -53,4 +53,9 @@ class Tui:
         line2.append('|')
 
         return (line1, line2, line3)
+
+    def initGame(self):
+        map = Map(5, 5)
+        max_turns = 10
+        self.game = Game(map, max_turns)
 
