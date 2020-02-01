@@ -96,7 +96,7 @@ class Game:
         pass
 
     def choose_robot(self, robot):
-        pass
+        self.controlled_robot = robot
 
     def is_robot_being_controlled(self):
         return self.controlled_robot != None
@@ -104,24 +104,31 @@ class Game:
     def go_left(self):
         if (self.is_robot_being_controlled()):
             self.controlled_robot.setX(self.controlled_robot.getX() - 1)
+        self.turns_left = self.turns_left - 1
 
     def go_right(self):
         if (self.is_robot_being_controlled()):
             self.controlled_robot.setX(self.controlled_robot.getX() + 1)
+        self.turns_left = self.turns_left - 1
 
     def go_down(self):
         if (self.is_robot_being_controlled()):
             self.controlled_robot.setY(self.controlled_robot.getY() + 1)
+        self.turns_left = self.turns_left - 1
 
     def go_up(self):
         if (self.is_robot_being_controlled()):
             self.controlled_robot.setY(self.controlled_robot.getY() - 1)
+        self.turns_left = self.turns_left - 1
 
     def robot_action(self):
         pass
 
     def end_turn(self):
         pass
+
+    def willShutdown(self):
+        return self.turns_left < 0
 
 
 class Robot:
