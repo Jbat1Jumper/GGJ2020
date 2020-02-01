@@ -57,9 +57,9 @@ class Map:
 
 
 class Game:
-    def __init__(self, map_, turn_count):
+    def __init__(self, map_, max_turns):
         self.map = map_
-        self.turns_left = turn_count
+        self.turns_left = max_turns
         self.controlled_robot = None
 
     def get_map(self):
