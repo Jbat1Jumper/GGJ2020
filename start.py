@@ -17,10 +17,10 @@ def tui():
 
 @cli.command(help="Corre el juego con interfaz grafica")
 def gui():
-    t = Tui()
-    t.init()
-    t.run()
-    t.teardown()
+    g = Gui()
+    g.init()
+    g.run()
+    g.teardown()
 
 if __name__ == "__main__":
     cli()
