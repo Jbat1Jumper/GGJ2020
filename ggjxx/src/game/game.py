@@ -63,5 +63,47 @@ class Map:
 
 
 class Game:
-    pass
+    def __init__(self, map_, turn_count):
+        self.map = map_
+        self.turns_left = turn_count
+        self.controlled_robot = None
+
+    def get_map(self):
+        return self.map
+    
+    def won(self):
+        # check win condition
+        return False
+
+    def lost(self):
+        # check lose condition
+        return True
+
+    def available_robots(self):
+        pass
+
+    def choose_robot(self, robot):
+        pass
+
+    def is_robot_being_controlled(self):
+        pass
+
+    def go_left(self):
+        pass
+
+    def go_right(self):
+        pass
+
+    def go_down(self):
+        pass
+
+    def go_up(self):
+        pass
+
+    def robot_action(self):
+        pass
+
+    def end_turn(self):
+        pass
+
 
