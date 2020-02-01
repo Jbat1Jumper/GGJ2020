@@ -23,19 +23,19 @@ class Cell:
         return self._hasRadiation
 
     def putRadiation(self):
-        return self._hasRadiation = True
+        self._hasRadiation = True
 
     def putOutRadiation(self):
-        return self._hasRadiation = False
+        self._hasRadiation = False
 
     def canGo(self, direction):
-        if direction = UP:
+        if direction == UP:
             return self._canGoUp
-        if direction = DOWN:
+        if direction == DOWN:
             return self._canGoDown
-        if direction = LEFT:
+        if direction == LEFT:
             return self._canGoLeft
-        if direction = RIGHT:
+        if direction == RIGHT:
             return self._canGoRight
         return False;
 
@@ -46,12 +46,12 @@ class Cell:
         self._canGoRight = False
 
         for direction in directions:
-            if direction = UP:
+            if direction == UP:
                 self._canGoUp = True
-            if direction = DOWN:
+            if direction == DOWN:
                 self._canGoDown = True
-            if direction = LEFT:
+            if direction == LEFT:
                 self._canGoLeft = True
-            if direction = RIGHT:
+            if direction == RIGHT:
                 self._canGoRight = True
             return False;
