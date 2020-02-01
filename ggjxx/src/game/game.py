@@ -7,6 +7,15 @@ class Map:
         self.height = h
         self.cells = [[Cell() for _ in range(w)] for _ in range(h)]
 
+    def getHeight(self):
+        return self.height
+
+    def getWidth(self):
+        return self.width
+
+    def getCell(self, x, y):
+        return self.cells[x][y]
+
     def validate_coords(self, x, y):
         assert 0 <= x and x < self.width, "coord x ouf of bounds"
         assert 0 <= y and y < self.height, "coord y out of bounds"
@@ -61,6 +70,9 @@ class Game:
         self.map = map_
         self.turns_left = max_turns
         self.controlled_robot = None
+
+    # def get_robot():
+        # return 
 
     def get_map(self):
         return self.map
