@@ -37,7 +37,7 @@ class Cell:
             return self._canGoLeft
         if direction == RIGHT:
             return self._canGoRight
-        return False;
+        return False
 
     def setAvailableDirections(self, directions):
         self._canGoUp = False
