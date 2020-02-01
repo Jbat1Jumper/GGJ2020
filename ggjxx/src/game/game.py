@@ -95,7 +95,8 @@ class Game:
         return filter(lambda r: not r.busy, self.map.get_robots())
 
     def choose_robot(self, robot):
-        self.choose_robot = robot
+        robot.is_being_controlled = True
+        self.controlled_robot = robot
 
     def is_robot_being_controlled(self):
         return self.controlled_robot != None
@@ -137,6 +138,7 @@ class Game:
 
     def end_turn(self):
         self.turns_left -= 1
+        self.controlled_robot.is_being_controlled = False
         self.controlled_robot = None
 
 
@@ -146,6 +148,7 @@ class Robot:
         self.y = y
         self.name = '_'
         self.busy = False
+        self.is_being_controlled = False
 
     def action(self, map):
         pass
