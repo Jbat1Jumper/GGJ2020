@@ -69,9 +69,19 @@ class Tui:
         return (line1, line2, line3)
 
     def initGame(self):
-        map = Map(10, 5)
-        map.get_cell(0,0).setAvailableDirections([])
-        #map.get_cell(1,0).setOnFire()
+        map = Map(4, 3)
+        map.get_cell(0,0).setAvailableDirections([DOWN])
+        map.get_cell(0,1).setAvailableDirections([DOWN,UP])
+        map.get_cell(0,2).setAvailableDirections([RIGHT,UP])
+        map.get_cell(1,2).setAvailableDirections([RIGHT,LEFT])
+        map.get_cell(2,2).setAvailableDirections([UP,LEFT])
+        map.get_cell(2,1).setAvailableDirections([DOWN,LEFT,UP])
+        map.get_cell(1,1).setAvailableDirections([RIGHT,UP])
+        map.get_cell(1,0).setAvailableDirections([RIGHT,DOWN])
+        map.get_cell(2,0).setAvailableDirections([LEFT,RIGHT,DOWN])
+        map.get_cell(3,0).setAvailableDirections([LEFT])
+        map.get_cell(3,1).setAvailableDirections([])
+        map.get_cell(3,2).setAvailableDirections([])
 
         max_turns = 10
         self.gameState = Game(map, max_turns)
