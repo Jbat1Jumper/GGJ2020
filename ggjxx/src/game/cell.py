@@ -3,7 +3,7 @@ from .constants import UP,DOWN,RIGHT,LEFT
 class Cell:
     def __init__(self):
         self.robots = []
-        self._hasFire = True
+        self._hasFire = False
         self._hasRadiation = False
         self._canGoRight = True
         self._canGoLeft = True
