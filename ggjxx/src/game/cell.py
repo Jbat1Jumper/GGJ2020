@@ -1,4 +1,4 @@
-from .game import UP,DOWN,RIGHT,LEFT
+from .constants import UP,DOWN,RIGHT,LEFT
 
 class Cell:
     def __init__(self):
