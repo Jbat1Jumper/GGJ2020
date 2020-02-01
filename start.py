@@ -27,7 +27,7 @@ def gui():
 
 @cli.command(help="Prueba de Game")
 def game():
-    g = Game()
+    g = Game(1,1)
 
 
 @cli.command(help="Prueba de Cell")
