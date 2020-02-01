@@ -40,32 +40,6 @@ class Map:
         self.validate_coords(x, y)
         self.cells[y][x] = o
 
-    def has_wall(self, x, y, direction):
-        self.validate_coords(x, y)
-        q = {
-            LEFT: lambda: True if x == 0 else self.v_valls[y][x-1],
-            RIGHT: lambda: True if x == self.width-1 else self.v_valls[y][x],
-            UP: lambda: True if y == 0 else self.h_valls[y-1][x],
-            DOWN: lambda: True if y == self.height-1 else self.v_valls[y][x],
-        }
-        return q[direction]()
-
-    def set_wall(self, x, y, direction, value):
-        self.validate_coords(x, y)
-        q = {
-            LEFT:  (self.v_walls, -1,  0),
-            RIGHT: (self.v_walls,  0,  0),
-            UP:    (self.h_walls,  0, -1),
-            DOWN:  (self.h_walls,  0,  0),
-        }
-        matrix, xoffset, yoffset = q[direction]
-        x_ = x + xoffset
-        y_ = y + yoffset
-
-        if 0 <= x_ and x_ < self.width-1 \
-                and 0 <= y_ and y_ < self.height-1:
-            matrix[y_][x_] = value
-
     def print():
         pass
 
@@ -110,6 +84,7 @@ class Game:
         r = self.controlled_robot
         if self.map.getCell(r.x, r.y).canGo(LEFT):
             r.x -= 1
+        self.checkHazards(r)
 
     def go_right(self):
         if not self.is_robot_being_controlled():
@@ -118,6 +93,7 @@ class Game:
         r = self.controlled_robot
         if self.map.getCell(r.x, r.y).canGo(RIGHT):
             r.x += 1
+        self.checkHazards(r)
 
     def go_down(self):
         if not self.is_robot_being_controlled():
@@ -126,6 +102,7 @@ class Game:
         r = self.controlled_robot
         if self.map.getCell(r.x, r.y).canGo(DOWN):
             r.y += 1
+        self.checkHazards(r)
 
     def go_up(self):
         if not self.is_robot_being_controlled():
@@ -134,6 +111,36 @@ class Game:
         r = self.controlled_robot
         if self.map.getCell(r.x, r.y).canGo(UP):
             r.y -= 1
+        self.checkHazards(r)
+
+    def checkHazards(self, robot):
+        xPosition = robot.getX()
+        yPosition = robot.getY()
+        cells = self.getAdjacentCells(xPosition,yPosition)
+        for cell in cells:
+            if cell.hasRadiation():
+                pass
+            if cell.hasFire():
+                pass
+
+
+    def getAdjacentCells(self,x,y):
+        center = self.map.getCell(x,y)
+        allCells = [center]
+        minX = max(x-1,0)
+        maxX = min(x+1,Map.getWidth()-1)
+        miny = max(y-1,0)
+        maxy = min(y+1,Map.getHeight()-1)
+
+        for _x in range(minX,maxX):
+            for _y in range (miny,maxy)
+                allCells.append(self.map.getCell(_x,_y))
+
+        return allCells
+
+
+
+
 
     def robot_action(self):
         pass
