@@ -2,10 +2,14 @@ from . import cell
 from .constants import UP,DOWN,RIGHT,LEFT
 
 class Map:
-    def __init__(self, w, h):
+    def __init__(self, w, h, robots):
         self.width = w
         self.height = h
+        self.robots = robots
         self.cells = [[cell() for _ in range(w)] for _ in range(h)]
+
+    def get_robots(self):
+        return self.get_robots()
 
     def validate_coords(self, x, y):
         assert 0 <= x and x < self.width, "coord x ouf of bounds"
@@ -64,6 +68,9 @@ class Game:
 
     def get_map(self):
         return self.map
+
+    def get_controlled_robot(self):
+        return self.controlled_robot
     
     def won(self):
         # check win condition
@@ -101,3 +108,13 @@ class Game:
         pass
 
 
+class Robot:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.name = '_'
+        self.busy = False
+
+    def action(self, map):
+        pass
+    
