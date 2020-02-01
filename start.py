@@ -4,7 +4,7 @@ from ggjxx import settings
 from ggjxx.src.TerminalUI.tui import Tui
 from ggjxx.src.graphiUI.gui import Gui
 from ggjxx.src.game.cell import Cell
-from ggjxx.src.game.game import Game
+from ggjxx.src.game.game import Game, Map
 
 @click.group()
 def cli():
@@ -28,6 +28,12 @@ def gui():
 @cli.command(help="Prueba de Game")
 def game():
     g = Game(1,1)
+
+
+@cli.command(help="Prueba de Map")
+def game():
+    m = Map(1,1)
+    m.get_cell(0, 0)
 
 
 @cli.command(help="Prueba de Cell")

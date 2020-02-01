@@ -1,11 +1,11 @@
-from . import cell
+from .cell import Cell
 from .constants import UP,DOWN,RIGHT,LEFT
 
 class Map:
     def __init__(self, w, h):
         self.width = w
         self.height = h
-        self.cells = [[cell() for _ in range(w)] for _ in range(h)]
+        self.cells = [[Cell() for _ in range(w)] for _ in range(h)]
 
     def validate_coords(self, x, y):
         assert 0 <= x and x < self.width, "coord x ouf of bounds"
@@ -17,16 +17,16 @@ class Map:
             or y == 0 \
             or y == self.height - 1
 
-    def get_object(self, x, y):
-        validate_coords(x, y)
+    def get_cell(self, x, y):
+        self.validate_coords(x, y)
         return self.cells[y][x]
 
     def set_object(self, x, y, o):
-        validate_coords(x, y)
+        self.validate_coords(x, y)
         self.cells[y][x] = o
 
     def has_wall(self, x, y, direction):
-        validate_coords(x, y)
+        self.validate_coords(x, y)
         q = {
             LEFT: lambda: True if x == 0 else self.v_valls[y][x-1],
             RIGHT: lambda: True if x == self.width-1 else self.v_valls[y][x],
@@ -36,7 +36,7 @@ class Map:
         return q[direction]()
 
     def set_wall(self, x, y, direction, value):
-        validate_coords(x, y)
+        self.validate_coords(x, y)
         q = {
             LEFT:  (self.v_walls, -1,  0),
             RIGHT: (self.v_walls,  0,  0),
