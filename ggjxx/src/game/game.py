@@ -119,9 +119,11 @@ class Game:
         cells = self.getAdjacentCells(xPosition,yPosition)
         for cell in cells:
             if cell.hasRadiation():
-                pass
+                self.killRobot(robot)
+                return
             if cell.hasFire():
-                pass
+                self.killRobot(robot)
+                return
 
 
     def getAdjacentCells(self,x,y):
@@ -138,8 +140,9 @@ class Game:
 
         return allCells
 
-
-
+    def killRobot(self, robot):
+        robot.setX(map.startX)
+        robot.setY(map.startY)
 
 
     def robot_action(self):
