@@ -33,18 +33,18 @@ class Tui:
             print(lines[2])
 
     def renderCell(self, cell, isRobotInCell):
-        if (cell.canGo(UP)):
+        if cell.canGo(UP):
             line1 = '     '
         else:
             line1 = ' --- '
-        if (cell.canGo(LEFT)):
-            line2 = '|'
-        else:
+        if cell.canGo(LEFT):
             line2 = ' '
-        if cell.canGo(DOWN):
-            line3 = ' --- '
         else:
+            line2 = '|'
+        if cell.canGo(DOWN):
             line3 = '     '
+        else:
+            line3 = ' --- '
 
         if (isRobotInCell):
             line2 += 'X'
@@ -62,16 +62,16 @@ class Tui:
             line2 += ' '
 
         if cell.canGo(RIGHT):
-            line2 += '|'
-        else:
             line2 += ' '
+        else:
+            line2 += '|'
 
         return (line1, line2, line3)
 
     def initGame(self):
         map = Map(10, 5)
         map.get_cell(0,0).setAvailableDirections([])
-        map.get_cell(1,0).setOnFire()
+        #map.get_cell(1,0).setOnFire()
 
         max_turns = 10
         self.gameState = Game(map, max_turns)
