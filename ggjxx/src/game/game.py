@@ -1,4 +1,4 @@
-from . import cell
+from .cell import Cell
 from .constants import UP,DOWN,RIGHT,LEFT
 
 class Map:
@@ -6,7 +6,7 @@ class Map:
         self.width = w
         self.height = h
         self.robots = robots
-        self.cells = [[cell() for _ in range(w)] for _ in range(h)]
+        self.cells = [[Cell() for _ in range(w)] for _ in range(h)]
 
     def get_robots(self):
         return self.get_robots()
@@ -21,16 +21,16 @@ class Map:
             or y == 0 \
             or y == self.height - 1
 
-    def get_object(self, x, y):
-        validate_coords(x, y)
+    def get_cell(self, x, y):
+        self.validate_coords(x, y)
         return self.cells[y][x]
 
     def set_object(self, x, y, o):
-        validate_coords(x, y)
+        self.validate_coords(x, y)
         self.cells[y][x] = o
 
     def has_wall(self, x, y, direction):
-        validate_coords(x, y)
+        self.validate_coords(x, y)
         q = {
             LEFT: lambda: True if x == 0 else self.v_valls[y][x-1],
             RIGHT: lambda: True if x == self.width-1 else self.v_valls[y][x],
@@ -40,7 +40,7 @@ class Map:
         return q[direction]()
 
     def set_wall(self, x, y, direction, value):
-        validate_coords(x, y)
+        self.validate_coords(x, y)
         q = {
             LEFT:  (self.v_walls, -1,  0),
             RIGHT: (self.v_walls,  0,  0),
@@ -61,9 +61,9 @@ class Map:
 
 
 class Game:
-    def __init__(self, map_, turn_count):
+    def __init__(self, map_, max_turns):
         self.map = map_
-        self.turns_left = turn_count
+        self.turns_left = max_turns
         self.controlled_robot = None
 
     def get_map(self):
