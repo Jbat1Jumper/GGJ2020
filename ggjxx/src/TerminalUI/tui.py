@@ -69,7 +69,7 @@ class Tui:
         return (line1, line2, line3)
 
     def initGame(self):
-        map = Map(4, 3)
+        map = Map(4, 3, None)
         map.get_cell(0,0).setAvailableDirections([DOWN])
         map.get_cell(0,1).setAvailableDirections([DOWN,UP])
         map.get_cell(0,2).setAvailableDirections([RIGHT,UP])
