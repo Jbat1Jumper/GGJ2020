@@ -5,5 +5,5 @@ class BaseUI():
 	def getInput(self):
 		pass
 
-	def render(self):
+	def render(self, game):
 		pass
