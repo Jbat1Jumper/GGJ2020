@@ -18,3 +18,5 @@ class GameActionInterpreter():
 			game.switchControlledRobot()
 		if (action == ACTION_QUIT):
 			game.terminate()
+		if (action == ACTION_RESTART):
+			game.restart()

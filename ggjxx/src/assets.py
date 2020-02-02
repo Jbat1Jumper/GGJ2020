@@ -4,44 +4,49 @@ from .game.constants import *
 
 class Assets:
     def __init__(self):
-        self.floor = pygame.image.load("assets/placeholders/floor.png")
-        self.floor = pygame.transform.scale(self.floor, (TILE_SIZE, TILE_SIZE))
-
-        self.wall_h = pygame.image.load("assets/placeholders/wall_h.png")
-        sz = self.wall_h.get_size()
-        self.wall_h = pygame.transform.scale(self.wall_h, (TILE_SIZE, int(sz[1] * (TILE_SIZE/sz[0]))))
-
-        self.wall_v = pygame.image.load("assets/placeholders/wall_v.png")
-        sz = self.wall_v.get_size()
-        self.wall_v = pygame.transform.scale(self.wall_v, (WALL_WIDTH, int(sz[1] * (WALL_WIDTH/sz[0]))))
-
-        def load_robot_image(suffix, num):
-            s = pygame.image.load("assets/placeholders/robot" + suffix + str(num) + ".png")
+        def load_tile(filename):
+            s = pygame.image.load(filename).convert_alpha()
             s = pygame.transform.scale(s, (TILE_SIZE, TILE_SIZE))
             return s
 
-        self.robot = {key: load_robot_image("", num) for (key, num) in [(UP, 1), (LEFT, 2), (DOWN, 3), (RIGHT, 4)]}
-        self.robotg = {key: load_robot_image("g", num) for (key, num) in [(UP, 1), (LEFT, 2), (DOWN, 3), (RIGHT, 4)]}
-        self.robotr = {key: load_robot_image("r", num) for (key, num) in [(UP, 1), (LEFT, 2), (DOWN, 3), (RIGHT, 4)]}
+        self.floor  = load_tile("assets/floor_2.png")
+        self.wall_h = load_tile("assets/wall_horizontal.png")
+        self.wall_v = load_tile("assets/wall_vertical.png")
 
-        self.fire = pygame.image.load("assets/placeholders/fire1.png")
-        self.fire = pygame.transform.scale(self.fire, (TILE_SIZE, TILE_SIZE))
+        self.robot = {
+            UP:    load_tile("assets/robot_radar_up.png"),
+            DOWN:  load_tile("assets/robot_radar_down.png"),
+            LEFT:  load_tile("assets/robot_radar_left.png"),
+            RIGHT: load_tile("assets/robot_radar_right.png"),
+        }
 
-        self.fire_fixed = pygame.image.load("assets/placeholders/fire2.png")
-        self.fire_fixed = pygame.transform.scale(self.fire_fixed, (TILE_SIZE, TILE_SIZE))
+        self.robotg = {
+            UP:    load_tile("assets/robot_reparador_up.png"),
+            DOWN:  load_tile("assets/robot_reparador_down.png"),
+            LEFT:  load_tile("assets/robot_reparador_left.png"),
+            RIGHT: load_tile("assets/robot_reparador_right.png"),
+        }
 
-        self.pipe = pygame.image.load("assets/pipe_broken.png")
-        self.pipe = pygame.transform.scale(self.pipe, (TILE_SIZE, TILE_SIZE))
+        self.robotr = {
+            UP:    load_tile("assets/robot_cable_up.png"),
+            DOWN:  load_tile("assets/robot_cable_down.png"),
+            LEFT:  load_tile("assets/robot_tape_left.png"),
+            RIGHT: load_tile("assets/robot_tape_right.png"),
+        }
 
-        self.pipe_fixed = pygame.image.load("assets/pipe_fixed.png")
-        self.pipe_fixed = pygame.transform.scale(self.pipe_fixed, (TILE_SIZE, TILE_SIZE))
+        self.fire       = load_tile("assets/cable_broken.png")
+        self.fire_fixed = load_tile("assets/cable_fixed.png")
+        self.pipe       = load_tile("assets/pipe_broken.png")
+        self.pipe_fixed = load_tile("assets/pipe_fixed.png")
 
-        self.light = self.load_animation("assets/placeholders/light#.png", 5)
+        self.light = self.load_animation("assets/placeholders/light#.png", 1, 5)
+        self.puddle = self.load_animation("assets/floor_radioactive_goop.png", 1, 1)
+        self.electricity = self.load_animation("assets/floor_electric_f#.png", 1, 2)
 
-    def load_animation(self, filename, frames):
+    def load_animation(self, filename, start, frames):
         sprites = []
-        for i in range(frames):
-            s = pygame.image.load(filename.replace("#", str(i+1)))
+        for i in range(start, start + frames):
+            s = pygame.image.load(filename.replace("#", str(i))).convert_alpha()
             s = pygame.transform.scale(s, (TILE_SIZE, TILE_SIZE))
             sprites.append(s)
         return sprites

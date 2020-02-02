@@ -24,6 +24,8 @@ class TerminalUI(BaseUI):
             return ACTION_GO_LEFT
         if (key_pressed == CHANGE_ROBOT_KEY):
             return ACTION_ROTATE_ROBOT
+        if (key_pressed == RESTART_KEY_CHAR):
+            return ACTION_RESTART
         if (key_pressed == QUIT_KEY_CHAR):
             return ACTION_QUIT
 

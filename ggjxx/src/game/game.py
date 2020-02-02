@@ -1,17 +1,21 @@
 from .cell import Cell
-from .constants import UP,DOWN,RIGHT,LEFT
+from .constants import UP,DOWN,RIGHT,LEFT, MOVEMENT_NOT_ALLOWED, MOVEMENT_DONE, KILL_ROBOT
 from ..structure.levels.base_level import BaseLevel
 from .map import Map
+from copy import deepcopy
 
 
 class Game:
     def __init__(self, gameLevel):
         self.initialGameLevel = gameLevel
+        self.listeners = []
 
     def restart(self):
-        self.map = self.initialGameLevel.getMap()
-        self.turns_left = self.initialGameLevel.getMaxTurns()
-        self.robots = self.initialGameLevel.getRobots()
+        print('restarted')
+        gameLevel = deepcopy(self.initialGameLevel)
+        self.map = gameLevel.getMap()
+        self.turns_left = gameLevel.getMaxTurns()
+        self.robots = gameLevel.getRobots()
         self.choose_robot(self.robots[0])
         self._won = False
 
@@ -69,6 +73,10 @@ class Game:
         r.direction = LEFT
         if self.map.getCell(r.x, r.y).canGo(LEFT):
             r.x -= 1
+            self.trigger_event(MOVEMENT_DONE)
+        else:
+            self.trigger_event(MOVEMENT_NOT_ALLOWED)
+
         self.consumeTurn()
         self.checkHazards(r)
 
@@ -80,6 +88,10 @@ class Game:
         r.direction = RIGHT
         if self.map.getCell(r.x, r.y).canGo(RIGHT):
             r.x += 1
+            self.trigger_event(MOVEMENT_DONE)
+        else:
+            self.trigger_event(MOVEMENT_NOT_ALLOWED)
+
         self.consumeTurn()
         self.checkHazards(r)
 
@@ -91,6 +103,10 @@ class Game:
         r.direction = DOWN
         if self.map.getCell(r.x, r.y).canGo(DOWN):
             r.y += 1
+            self.trigger_event(MOVEMENT_DONE)
+        else:
+            self.trigger_event(MOVEMENT_NOT_ALLOWED)
+
         self.consumeTurn()
         self.checkHazards(r)
 
@@ -102,6 +118,10 @@ class Game:
         r.direction = UP
         if self.map.getCell(r.x, r.y).canGo(UP):
             r.y -= 1
+            self.trigger_event(MOVEMENT_DONE)
+        else:
+            self.trigger_event(MOVEMENT_NOT_ALLOWED)
+
         self.consumeTurn()
         self.checkHazards(r)
 
@@ -115,7 +135,7 @@ class Game:
         cells = self.getAdjacentCells(xPosition, yPosition)
         for cell in cells:
             if cell.hasRadiation():
-                robot.interactWithRadiation(self,currentCell)
+                robot.interactWithRadiation(self, currentCell)
             if cell.hasFire():
                 robot.interactWithFire(self, currentCell)
             if cell.hasReactor():
@@ -139,6 +159,7 @@ class Game:
 
     def killRobot(self, robot):
         robot.resetPosition()
+        self.trigger_event(KILL_ROBOT)
 
     def robot_action(self):
         pass
@@ -157,3 +178,12 @@ class Game:
 
     def finished(self):
         return self.willShutdown()
+
+    def trigger_event(self, event):
+        for listener in self.listeners:
+            listener.trigger(event)
+
+    def subscribe(self, listener):
+        if not hasattr(listener, "trigger"):
+            return
+        self.listeners.append(listener)
