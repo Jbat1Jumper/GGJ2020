@@ -76,7 +76,7 @@ class Game:
         if pos+1 == len(self.robots):
             newPos = 0
         else:
-            newPos = 1
+            newPos = pos+1
         self.choose_robot(self.robots[newPos])
 
     
@@ -208,7 +208,7 @@ class Robot:
         game.killRobot(self)
 
     def interactWithFire(self, game, cell):
-        game.killRobot()
+        game.killRobot(self)
 
 class FireFighter(Robot):
     def interactWithFire(self, game, cell):
