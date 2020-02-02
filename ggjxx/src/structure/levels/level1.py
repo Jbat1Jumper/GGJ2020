@@ -7,7 +7,7 @@ from ...game.constants import *
 
 class Level1(BaseLevel):
     def __init__(self):
-        self.robots = [ExplorationRobot(1, 2), FireFighterRobot(0,7), RadiationFighterRobot(7,0)]
+        self.ggjxx/src/structure/levels/level1.pys = [ExplorationRobot(1, 2), FireFighterRobot(0,7), RadiationFighterRobot(7,0)]
         self.map = Map(8, 8, self.robots, 0,7)
         self.map.get_cell(0,0).setAvailableDirections([DOWN])
         self.map.get_cell(0,1).setAvailableDirections([DOWN,UP])
