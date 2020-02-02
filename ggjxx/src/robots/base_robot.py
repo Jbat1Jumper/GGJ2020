@@ -1,3 +1,6 @@
+from ..game.constants import *
+
+
 class BaseRobot:
     def __init__(self, x, y):
         self.x = x
@@ -5,8 +8,9 @@ class BaseRobot:
         self.name = '_'
         self.busy = False
         self.is_being_controlled = False
-        self.initX = x;
-        self.initY = y;
+        self.initX = x
+        self.initY = y
+        self.direction = UP
         self.renderCharConstant = 'X'
 
     def action(self, map):

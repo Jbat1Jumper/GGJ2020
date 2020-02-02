@@ -1,4 +1,4 @@
-import os
+import os, sys
 from .base_ui import BaseUI
 from ...input.getch import _Getch
 from ...game.game import Game
@@ -54,6 +54,7 @@ class TerminalUI(BaseUI):
             print(lines[0])
             print(lines[1])
             print(lines[2])
+        sys.stdout.flush()
 
     def renderCell(self, cell, robot):
         if cell.canGo(LEFT):

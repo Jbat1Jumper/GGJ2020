@@ -4,7 +4,9 @@ class Cell:
     def __init__(self):
         self.robots = []
         self._hasFire = False
+        self.hadFire = False
         self._hasRadiation = False
+        self.hadRadiation = False
         self._canGoRight = True
         self._canGoLeft = True
         self._canGoUp = True
@@ -17,6 +19,7 @@ class Cell:
         self._hasFire = True
 
     def putOutFire(self):
+        self.hadFire = self.hadFire or self._hasFire
         self._hasFire = False
 
     def hasRadiation(self):
@@ -26,6 +29,7 @@ class Cell:
         self._hasRadiation = True
 
     def putOutRadiation(self):
+        self.hadRadiation = self.hadRadiation or self._hasRadiation 
         self._hasRadiation = False
 
     def canGo(self, direction):

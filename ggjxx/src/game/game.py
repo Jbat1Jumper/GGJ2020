@@ -57,6 +57,7 @@ class Game:
             return
 
         r = self.controlled_robot
+        r.direction = LEFT
         if self.map.getCell(r.x, r.y).canGo(LEFT):
             r.x -= 1
         self.checkHazards(r)
@@ -66,6 +67,7 @@ class Game:
             return
 
         r = self.controlled_robot
+        r.direction = RIGHT
         if self.map.getCell(r.x, r.y).canGo(RIGHT):
             r.x += 1
         self.checkHazards(r)
@@ -75,6 +77,7 @@ class Game:
             return
 
         r = self.controlled_robot
+        r.direction = DOWN
         if self.map.getCell(r.x, r.y).canGo(DOWN):
             r.y += 1
         self.checkHazards(r)
@@ -84,6 +87,7 @@ class Game:
             return
 
         r = self.controlled_robot
+        r.direction = UP
         if self.map.getCell(r.x, r.y).canGo(UP):
             r.y -= 1
         self.checkHazards(r)
