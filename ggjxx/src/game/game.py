@@ -141,53 +141,8 @@ class Game:
         return self.turns_left < 0
 
     def terminate(self):
-        # print('exit by terminate')
         exit()
         self.turns_left = -1
 
     def finished(self):
         return False
-
-
-class Robot:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.name = '_'
-        self.busy = False
-        self.is_being_controlled = False
-        self.initX = x;
-        self.initY = y;
-
-    def action(self, map):
-        pass
-
-    def getX(self):
-        return self.x
-
-    def getY(self):
-        return self.y
-
-    def setX(self, _x):
-        self.x = _x
-
-    def setY(self, _y):
-        self.y = _y
-
-    def resetPosition(self):
-        self.setX(self.initX)
-        self.setY(self.initY)
-
-    def interactWithRadiation(self, game, cell):
-        game.killRobot(self)
-
-    def interactWithFire(self, game, cell):
-        game.killRobot(self)
-
-class FireFighter(Robot):
-    def interactWithFire(self, game, cell):
-        cell.putOutFire()
-
-class RadiationFighter(Robot):
-    def interactWithRadiation(self, game, cell):
-        cell.putOutRadiation()
