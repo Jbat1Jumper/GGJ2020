@@ -17,3 +17,10 @@ CHANGE_ROBOT_KEY = ' '
 
 # QUIT_KEY_CHAR = ord('q')
 QUIT_KEY_CHAR = 'q'
+
+
+# Tamaños de assets
+TILE_SIZE = 48
+WALL_WIDTH = 16
+WALL_VERTICAL_OFFSET = 8
+SCREEN_SIZE = 640, 480
