@@ -7,6 +7,7 @@ from ggjxx.src.structure.game_controller import GameController
 from ggjxx.src.structure.game_action_interpreter import GameActionInterpreter
 from ggjxx.src.structure.ui.terminal_ui import TerminalUI
 from ggjxx.src.structure.ui.graphics_ui import GraphicsUI
+from ggjxx.src.structure.pygame_sound_controller import PygameSoundController
 from ggjxx.src.structure.levels.level1 import Level1
 
 @click.group()
@@ -34,6 +35,9 @@ def gui():
     ui = GraphicsUI()
 
     gameActionInterpreter = GameActionInterpreter()
+
+    soundController = PygameSoundController()
+    game.subscribe(soundController)
 
     gameController = GameController(game, ui, gameActionInterpreter)
     gameController.run()
