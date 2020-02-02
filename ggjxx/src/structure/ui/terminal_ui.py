@@ -1,9 +1,11 @@
+import os
 from .base_ui import BaseUI
 from ...input.getch import _Getch
-from ...game.game import Game, Robot, FireFighter, RadiationFighter
+from ...game.game import Game
 from ...game.map import Map
 from ...game.constants import *
 from ..action_constants import *
+from ...robots.base_robot import BaseRobot
 
 class TerminalUI(BaseUI):
     def __init__(self):
@@ -25,8 +27,13 @@ class TerminalUI(BaseUI):
         if (key_pressed == QUIT_KEY_CHAR):
             return ACTION_QUIT
 
+    def clearScreen(self):
+        clear = lambda: os.system('clear')
+        clear()
+
     def render(self, game):
-        print()
+        # print()
+        self.clearScreen()
         map = game.get_map()
         for y in range(map.getHeight()):
             lines = ['', '', '']
@@ -81,7 +88,7 @@ class TerminalUI(BaseUI):
             line3 += '---'
 
         if (robot):
-            line2 += 'X'
+            line2 += robot.render()
         else:
             line2 += ' '
 

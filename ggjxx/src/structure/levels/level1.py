@@ -1,11 +1,13 @@
 from .base_level import BaseLevel
-from ...game.game import Robot, FireFighter, RadiationFighter
+from ...robots.exploration_robot import ExplorationRobot
+from ...robots.fire_fighter_robot import FireFighterRobot
+from ...robots.radiation_fighter_robot import RadiationFighterRobot
 from ...game.map import Map
 from ...game.constants import *
 
 class Level1(BaseLevel):
     def __init__(self):
-        self.robots = [Robot(1, 2), FireFighter(0,7), RadiationFighter(7,0)]
+        self.robots = [ExplorationRobot(1, 2), FireFighterRobot(0,7), RadiationFighterRobot(7,0)]
         self.map = Map(8, 8, self.robots, 0,7)
         self.map.get_cell(0,0).setAvailableDirections([DOWN])
         self.map.get_cell(0,1).setAvailableDirections([DOWN,UP])
