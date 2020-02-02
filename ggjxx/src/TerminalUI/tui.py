@@ -31,6 +31,12 @@ class Tui:
                 lines[0] += newLines[0]
                 lines[1] += newLines[1]
                 lines[2] += newLines[2]
+            lines[0] = lines[0].replace('\\/', '--')
+            lines[0] = lines[0].replace('/\\', '--')
+            lines[1] = lines[1].replace('\\/', '--')
+            lines[1] = lines[1].replace('/\\', '--')
+            lines[2] = lines[2].replace('\\/', '--')
+            lines[2] = lines[2].replace('/\\', '--')
             print(lines[0])
             print(lines[1])
             print(lines[2])
@@ -38,13 +44,25 @@ class Tui:
 
     def renderCell(self, cell, robot):
         if cell.canGo(LEFT):
-            line1 = ' '
+            if cell.canGo(UP):
+                line1 = ' '
+            else:
+                line1 = '\\'
             line2 = ' '
-            line3 = ' '
+            if cell.canGo(DOWN):
+                line3 = ' '
+            else:
+                line3 = '/'
         else:
-            line1 = '|'
+            if cell.canGo(UP):
+                line1 = '|'
+            else:
+                line1 = '+'
             line2 = '|'
-            line3 = '|'
+            if cell.canGo(DOWN):
+                line3 = '|'
+            else:
+                line3 = '+'
 
         if cell.canGo(UP):
             line1 += '   '
@@ -72,13 +90,25 @@ class Tui:
             line2 += ' '
 
         if cell.canGo(RIGHT):
-            line1 += ' '
+            if cell.canGo(UP):
+                line1 += ' '
+            else:
+                line1 += '/'
             line2 += ' '
-            line3 += ' '
+            if cell.canGo(DOWN):
+                line3 += ' '
+            else:
+                line3 += '\\'
         else:
-            line1 += '|'
+            if cell.canGo(UP):
+                line1 += '|'
+            else:
+                line1 += '+'
             line2 += '|'
-            line3 += '|'
+            if cell.canGo(DOWN):
+                line3 += '|'
+            else:
+                line3 += '+'
 
         return (line1, line2, line3)
 
