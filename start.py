@@ -10,9 +10,11 @@ from ggjxx.src.structure.ui.graphics_ui import GraphicsUI
 from ggjxx.src.structure.pygame_sound_controller import PygameSoundController
 from ggjxx.src.structure.levels.level1 import Level1
 
-@click.group()
-def cli():
-    pass
+@click.group(invoke_without_command=True)
+@click.pass_context
+def cli(ctx):
+    if ctx.invoked_subcommand is None:
+        gui()
 
 @cli.command(help="Corre el juego por consola")
 def tui():
