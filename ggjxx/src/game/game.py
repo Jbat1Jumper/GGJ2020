@@ -2,7 +2,7 @@ from .cell import Cell
 from .constants import UP,DOWN,RIGHT,LEFT
 
 class Map:
-    def __init__(self, w, h, robots, startX,startY):
+    def __init__(self, w, h, robots, startX, startY):
         self.width = w
         self.height = h
         self.robots = robots
@@ -52,19 +52,33 @@ class Map:
 
 
 class Game:
-    def __init__(self, map_, max_turns):
+    def __init__(self, map_, max_turns, robots):
         self.map = map_
         self.turns_left = max_turns
         self.controlled_robot = None
+        self.robots = robots
+        self.choose_robot(robots[0])
 
-    # def get_robot():
-        # return 
+    def setRobots(self, robots):
+        self.robots = robots
 
     def get_map(self):
         return self.map
 
     def get_controlled_robot(self):
         return self.controlled_robot
+
+    def switchControlledRobot(self):
+        for i in range(len(self.robots)):
+            if self.robots[i].is_being_controlled:
+                pos = i
+                self.robots[i].is_being_controlled = False
+        if pos+1 == len(self.robots):
+            newPos = 0
+        else:
+            newPos = 1
+        self.choose_robot(self.robots[newPos])
+
     
     def won(self):
         # check win condition
@@ -122,12 +136,13 @@ class Game:
     def checkHazards(self, robot):
         xPosition = robot.getX()
         yPosition = robot.getY()
+        currentCell = self.map.getCell(robot.getX(), robot.getY())
         cells = self.getAdjacentCells(xPosition, yPosition)
         for cell in cells:
             if cell.hasRadiation():
-                self.killRobot(robot)
+                robot.interactWithRadiation(self,currentCell)
             if cell.hasFire():
-                self.killRobot(robot)
+                robot.interactWithFire(self, currentCell)
 
 
     def getAdjacentCells(self,x,y):
@@ -188,3 +203,17 @@ class Robot:
 
     def setY(self, _y):
         self.y = _y
+
+    def interactWithRadiation(self, game, cell):
+        game.killRobot(self)
+
+    def interactWithFire(self, game, cell):
+        game.killRobot()
+
+class FireFighter(Robot):
+    def interactWithFire(self, game, cell):
+        cell.putOutFire()
+
+class RadiationFighter(Robot):
+    def interactWithRadiation(self, game, cell):
+        cell.putOutRadiation()
