@@ -15,6 +15,7 @@ class GraphicsUI(BaseUI):
         self.assets = Assets()
         self.clock = pygame.time.Clock()
         self.current_frame = 0
+        pygame.display.set_caption('Robot Meltdown')
 
     def getInput(self):
         # if self.game.is_robot_being_controlled():
@@ -86,6 +87,7 @@ class GraphicsUI(BaseUI):
                 sys.stdout.flush()
 
     def draw_robot_phase(self, game):
+        self.draw_turns_left(game)
         self.draw_map(game)
     
     def draw_map(self, game):
@@ -101,6 +103,30 @@ class GraphicsUI(BaseUI):
                 self.draw_hazards(c, x, y, game)
                 self.draw_robot(c, x, y, m.get_robots())
                 self.draw_walls(c, x, y)
+
+    def draw_turns_left(self, game):
+
+        white = (255, 255, 255)
+        green = (0, 255, 0)
+        blue = (0, 0, 128)
+        black = (0, 0, 0)
+
+        display_surface = self.screen
+
+
+        font = pygame.font.Font('freesansbold.ttf', 28)
+
+        text = font.render('Turnos: ' + str(game.turns_left), True, white, black)
+
+        textRect = text.get_rect()
+
+        textRect.center = (game.get_map().width * TILE_SIZE + 100, 50)
+
+        display_surface.blit(text, textRect)
+
+
+
+
 
     def draw_walls(self, cell, x, y):
         if x == 0:
