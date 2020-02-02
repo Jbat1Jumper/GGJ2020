@@ -1,6 +1,7 @@
 from ..game.game import Game, Map, Robot, FireFighter, RadiationFighter
 from ..game.constants import *
 from ..input.getch import _Getch
+import sys
 
 class Tui:
 
@@ -12,6 +13,7 @@ class Tui:
     def run(self):
         while (not self.gameState.willShutdown()):
             self.updateGame()
+            sys.stdout.flush()
         pass
 
     def teardown(self):
