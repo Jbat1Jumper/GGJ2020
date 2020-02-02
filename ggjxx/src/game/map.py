@@ -44,3 +44,10 @@ class Map:
     def set_object(self, x, y, o):
         self.validate_coords(x, y)
         self.cells[y][x] = o
+
+    def hasFaultyReactor(self):
+        for row in self.cells:
+            for cell in row:
+                if (cell.hasReactor() and cell.reactorIsFaulty()):
+                    return True
+        return False

@@ -13,6 +13,7 @@ class Game:
         self.turns_left = self.initialGameLevel.getMaxTurns()
         self.robots = self.initialGameLevel.getRobots()
         self.choose_robot(self.robots[0])
+        self._won = False
 
     def setRobots(self, robots):
         self.robots = robots
@@ -36,11 +37,19 @@ class Game:
 
     
     def won(self):
-        # check win condition
+        if (self._won):
+            return True
+        if self.everyReactorHasBeenRepaired():
+            self.turns_left = 0
+            self._won = True
+            return True
         return False
 
+    def everyReactorHasBeenRepaired(self):
+        return not self.map.hasFaultyReactor()
+
     def lost(self):
-        return self.turns_left > 0
+        return self.turns_left <= 0
 
     def available_robots(self):
         return filter(lambda r: not r.busy, self.map.get_robots())
@@ -60,6 +69,7 @@ class Game:
         r.direction = LEFT
         if self.map.getCell(r.x, r.y).canGo(LEFT):
             r.x -= 1
+        self.consumeTurn()
         self.checkHazards(r)
 
     def go_right(self):
@@ -70,6 +80,7 @@ class Game:
         r.direction = RIGHT
         if self.map.getCell(r.x, r.y).canGo(RIGHT):
             r.x += 1
+        self.consumeTurn()
         self.checkHazards(r)
 
     def go_down(self):
@@ -80,6 +91,7 @@ class Game:
         r.direction = DOWN
         if self.map.getCell(r.x, r.y).canGo(DOWN):
             r.y += 1
+        self.consumeTurn()
         self.checkHazards(r)
 
     def go_up(self):
@@ -90,7 +102,11 @@ class Game:
         r.direction = UP
         if self.map.getCell(r.x, r.y).canGo(UP):
             r.y -= 1
+        self.consumeTurn()
         self.checkHazards(r)
+
+    def consumeTurn(self):
+        self.turns_left = self.turns_left - 1
 
     def checkHazards(self, robot):
         xPosition = robot.getX()
@@ -102,6 +118,8 @@ class Game:
                 robot.interactWithRadiation(self,currentCell)
             if cell.hasFire():
                 robot.interactWithFire(self, currentCell)
+            if cell.hasReactor():
+                robot.interactWithReactor(self, currentCell)
 
 
     def getAdjacentCells(self,x,y):
@@ -138,4 +156,4 @@ class Game:
         self.turns_left = -1
 
     def finished(self):
-        return False
+        return self.willShutdown()

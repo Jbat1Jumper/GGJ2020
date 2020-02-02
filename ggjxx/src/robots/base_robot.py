@@ -38,5 +38,9 @@ class BaseRobot:
     def interactWithFire(self, game, cell):
         game.killRobot(self)
 
+    def interactWithReactor(self, game, cell):
+        if (cell.reactorIsFaulty()):
+            game.killRobot(self)
+
     def render(self):
         return self.renderCharConstant
