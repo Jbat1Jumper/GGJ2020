@@ -107,26 +107,15 @@ class Game:
     def getAdjacentCells(self,x,y):
         center = self.map.getCell(x,y)
         allCells = [center]
-        minX = max(x-1,0)
-        maxX = min(x+1,self.map.getWidth()-1)
-        minY = max(y-1,0)
-        maxY = min(y+1,self.map.getHeight()-1)
-
-        allCells.append(self.map.getCell(x, y))
-        if (minX != x):
-            allCells.append(self.map.getCell(minX, y))
-        if (maxX != x):
-            allCells.append(self.map.getCell(maxX, y))
-        if (minY != y):
-            allCells.append(self.map.getCell(x, minY))
-        if (maxY != y):
-            allCells.append(self.map.getCell(x, maxY))
-
-        # allCells = unique(allCells)
-
-        # for _x in range(minX,maxX+1):
-            # for _y in range (minY,maxY+1):
-                # allCells.append(self.map.getCell(_x,_y))
+        
+        if (center.canGo(UP)):
+            allCells.append(self.map.getCell(x, y-1))
+        if (center.canGo(DOWN)):
+            allCells.append(self.map.getCell(x, y+1))
+        if (center.canGo(LEFT)):
+            allCells.append(self.map.getCell(x-1, y))
+        if (center.canGo(RIGHT)):
+            allCells.append(self.map.getCell(x+1, y))
 
         return allCells
 
