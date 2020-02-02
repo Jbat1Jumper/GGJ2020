@@ -1,10 +1,15 @@
 #! python
 import click
 from ggjxx import settings
-from ggjxx.src.TerminalUI.tui import Tui
+# from ggjxx.src.TerminalUI.tui import Tui
 from ggjxx.src.graphiUI.gui import Gui
 from ggjxx.src.game.cell import Cell
 from ggjxx.src.game.game import Game, Map
+from ggjxx.src.structure.game_controller import GameController
+from ggjxx.src.structure.game_action_interpreter import GameActionInterpreter
+from ggjxx.src.structure.ui.terminal_ui import TerminalUI
+from ggjxx.src.structure.ui.graphics_ui import GraphicsUI
+from ggjxx.src.structure.levels.level1 import Level1
 
 @click.group()
 def cli():
@@ -12,18 +17,28 @@ def cli():
 
 @cli.command(help="Corre el juego por consola")
 def tui():
-    t = Tui()
-    t.init()
-    t.run()
-    t.teardown()
+    gameLevel = Level1()
+    game = Game(gameLevel)
+
+    ui = TerminalUI()
+
+    gameActionInterpreter = GameActionInterpreter()
+
+    gameController = GameController(game, ui, gameActionInterpreter)
+    gameController.run()
 
 
 @cli.command(help="Corre el juego con interfaz grafica")
 def gui():
-    g = Gui()
-    g.init()
-    g.run()
-    g.teardown()
+    gameLevel = Level1()
+    game = Game(gameLevel)
+
+    ui = GraphicsUI()
+
+    gameActionInterpreter = GameActionInterpreter()
+
+    gameController = GameController(game, ui, gameActionInterpreter)
+    gameController.run()
 
 @cli.command(help="Prueba de Game")
 def game():

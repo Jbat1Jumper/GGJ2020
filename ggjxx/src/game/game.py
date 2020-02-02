@@ -1,5 +1,6 @@
 from .cell import Cell
 from .constants import UP,DOWN,RIGHT,LEFT
+from ..structure.levels.base_level import BaseLevel
 
 class Map:
     def __init__(self, w, h, robots, startX, startY):
@@ -52,12 +53,15 @@ class Map:
 
 
 class Game:
-    def __init__(self, map_, max_turns, robots):
-        self.map = map_
-        self.turns_left = max_turns
-        self.controlled_robot = None
-        self.robots = robots
-        self.choose_robot(robots[0])
+    # def __init__(self, map_, max_turns, robots):
+    def __init__(self, gameLevel):
+        self.initialGameLevel = gameLevel
+
+    def restart(self):
+        self.map = self.initialGameLevel.getMap()
+        self.turns_left = self.initialGameLevel.getMaxTurns()
+        self.robots = self.initialGameLevel.getRobots()
+        self.choose_robot(self.robots[0])
 
     def setRobots(self, robots):
         self.robots = robots
@@ -189,6 +193,9 @@ class Game:
         # print('exit by terminate')
         exit()
         self.turns_left = -1
+
+    def finished(self):
+        return False
 
 
 class Robot:
