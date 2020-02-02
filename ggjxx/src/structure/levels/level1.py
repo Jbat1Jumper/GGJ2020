@@ -83,7 +83,9 @@ class Level1(BaseLevel):
         self.map.get_cell(6,4).putRadiation()
         self.map.get_cell(7,7).putRadiation()
         self.map.get_cell(6,1).putRadiation()
+        self.map.get_cell(3,3).setWorkingReactor()
+        self.map.get_cell(5,5).setFaultyReactor()
 
-        self.max_turns = 10
+        self.max_turns = 30
         # self.gameState = Game(map, max_turns, robots)
         # self.gameState.setRobots(robots)
