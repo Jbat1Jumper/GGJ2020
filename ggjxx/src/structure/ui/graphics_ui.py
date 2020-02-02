@@ -1,3 +1,5 @@
+from .base_ui import BaseUI
+
 class GraphicsUI(BaseUI):
 	def __init__(self):
 		pass

@@ -1,6 +1,7 @@
 from .base_ui import BaseUI
 from ...input.getch import _Getch
-from ...game.game import Game, Map, Robot, FireFighter, RadiationFighter
+from ...game.game import Game, Robot, FireFighter, RadiationFighter
+from ...game.map import Map
 from ...game.constants import *
 from ..action_constants import *
 

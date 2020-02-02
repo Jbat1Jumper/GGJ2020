@@ -1,5 +1,6 @@
 from .base_level import BaseLevel
-from ...game.game import Robot, FireFighter, RadiationFighter, Map
+from ...game.game import Robot, FireFighter, RadiationFighter
+from ...game.map import Map
 from ...game.constants import *
 
 class Level1(BaseLevel):
