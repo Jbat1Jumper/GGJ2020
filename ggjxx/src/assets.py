@@ -34,10 +34,12 @@ class Assets:
             RIGHT: load_tile("assets/robot_tape_right.png"),
         }
 
-        self.fire       = load_tile("assets/cable_broken.png")
-        self.fire_fixed = load_tile("assets/cable_fixed.png")
-        self.pipe       = load_tile("assets/pipe_broken.png")
-        self.pipe_fixed = load_tile("assets/pipe_fixed.png")
+        self.fire          = load_tile("assets/cable_broken.png")
+        self.fire_fixed    = load_tile("assets/cable_fixed.png")
+        self.pipe          = load_tile("assets/pipe_broken.png")
+        self.pipe_fixed    = load_tile("assets/pipe_fixed.png")
+        self.reactor       = load_tile("assets/reactor_broken.png")
+        self.reactor_fixed = load_tile("assets/reactor_fixed.png")
 
         self.light = self.load_animation("assets/placeholders/light#.png", 1, 5)
         self.puddle = self.load_animation("assets/floor_radioactive_goop.png", 1, 1)
