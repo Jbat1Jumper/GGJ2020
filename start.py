@@ -1,8 +1,6 @@
 #! python
 import click
 from ggjxx import settings
-# from ggjxx.src.TerminalUI.tui import Tui
-from ggjxx.src.graphiUI.gui import Gui
 from ggjxx.src.game.cell import Cell
 from ggjxx.src.game.game import Game, Map
 from ggjxx.src.structure.game_controller import GameController
