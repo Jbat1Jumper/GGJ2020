@@ -53,6 +53,8 @@ class GraphicsUI(BaseUI):
                     return ACTION_ROTATE_ROBOT
                 elif event.unicode == QUIT_KEY_CHAR:
                     return ACTION_QUIT
+                elif event.unicode == RESTART_KEY_CHAR:
+                    return ACTION_RESTART
 
                 elif event.unicode == 'u':
                     print (WallOffsets.WALL_V_X_OFFSET)

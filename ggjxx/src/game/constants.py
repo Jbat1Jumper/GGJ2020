@@ -14,6 +14,7 @@ DOWN_KEY_CHAR = 's'
 RIGHT_KEY_CHAR = 'd'
 LEFT_KEY_CHAR = 'a'
 CHANGE_ROBOT_KEY = ' '
+RESTART_KEY_CHAR = 'r'
 
 # QUIT_KEY_CHAR = ord('q')
 QUIT_KEY_CHAR = 'q'

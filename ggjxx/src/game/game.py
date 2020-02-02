@@ -2,6 +2,7 @@ from .cell import Cell
 from .constants import UP,DOWN,RIGHT,LEFT, MOVEMENT_NOT_ALLOWED, MOVEMENT_DONE, KILL_ROBOT
 from ..structure.levels.base_level import BaseLevel
 from .map import Map
+from copy import deepcopy
 
 
 class Game:
@@ -10,9 +11,11 @@ class Game:
         self.listeners = []
 
     def restart(self):
-        self.map = self.initialGameLevel.getMap()
-        self.turns_left = self.initialGameLevel.getMaxTurns()
-        self.robots = self.initialGameLevel.getRobots()
+        print('restarted')
+        gameLevel = deepcopy(self.initialGameLevel)
+        self.map = gameLevel.getMap()
+        self.turns_left = gameLevel.getMaxTurns()
+        self.robots = gameLevel.getRobots()
         self.choose_robot(self.robots[0])
         self._won = False
 
