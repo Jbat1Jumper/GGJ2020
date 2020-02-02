@@ -83,7 +83,6 @@ class Level1(BaseLevel):
         self.map.get_cell(6,4).putRadiation()
         self.map.get_cell(7,7).putRadiation()
         self.map.get_cell(6,1).putRadiation()
-        self.map.get_cell(3,3).setWorkingReactor()
         self.map.get_cell(7,0).setFaultyReactor()
 
         self.max_turns = 40
