@@ -4,5 +4,6 @@ ACTION_GO_LEFT = 'go_left'
 ACTION_GO_RIGHT = 'go_right'
 
 ACTION_ROTATE_ROBOT = 'rotate_robot'
+ACTION_RESTART = 'restart'
 
 ACTION_QUIT = 'quit'
