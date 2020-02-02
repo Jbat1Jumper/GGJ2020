@@ -1,3 +1,7 @@
+# ==================================================
+# =================== DEPRECATED ===================
+# ==================================================
+
 from ..game.game import Game, Map, Robot, FireFighter, RadiationFighter
 from ..game.constants import *
 from ..input.getch import _Getch
