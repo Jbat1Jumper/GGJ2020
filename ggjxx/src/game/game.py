@@ -153,16 +153,26 @@ class Game:
         minY = max(y-1,0)
         maxY = min(y+1,self.map.getHeight()-1)
 
-        for _x in range(minX,maxX+1):
-            for _y in range (minY,maxY+1):
-                allCells.append(self.map.getCell(_x,_y))
+        allCells.append(self.map.getCell(x, y))
+        if (minX != x):
+            allCells.append(self.map.getCell(minX, y))
+        if (maxX != x):
+            allCells.append(self.map.getCell(maxX, y))
+        if (minY != y):
+            allCells.append(self.map.getCell(x, minY))
+        if (maxY != y):
+            allCells.append(self.map.getCell(x, maxY))
+
+        # allCells = unique(allCells)
+
+        # for _x in range(minX,maxX+1):
+            # for _y in range (minY,maxY+1):
+                # allCells.append(self.map.getCell(_x,_y))
 
         return allCells
 
     def killRobot(self, robot):
-        robot.setX(self.map.getStartingX())
-        robot.setY(self.map.getStartingY())
-
+        robot.resetPosition()
 
     def robot_action(self):
         pass
@@ -176,7 +186,7 @@ class Game:
         return self.turns_left < 0
 
     def terminate(self):
-        print('exit by terminate')
+        # print('exit by terminate')
         exit()
         self.turns_left = -1
 
@@ -188,6 +198,8 @@ class Robot:
         self.name = '_'
         self.busy = False
         self.is_being_controlled = False
+        self.initX = x;
+        self.initY = y;
 
     def action(self, map):
         pass
@@ -203,6 +215,10 @@ class Robot:
 
     def setY(self, _y):
         self.y = _y
+
+    def resetPosition(self):
+        self.setX(self.initX)
+        self.setY(self.initY)
 
     def interactWithRadiation(self, game, cell):
         game.killRobot(self)
