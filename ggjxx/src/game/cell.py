@@ -11,6 +11,9 @@ class Cell:
         self._canGoLeft = True
         self._canGoUp = True
         self._canGoDown = True
+        self._hasReactor = False
+        self._hadReactor = False
+        self._reactorIsFaulty = False
 
     def hasFire(self):
         return self._hasFire
@@ -31,6 +34,25 @@ class Cell:
     def putOutRadiation(self):
         self.hadRadiation = self.hadRadiation or self._hasRadiation 
         self._hasRadiation = False
+
+    def setWorkingReactor(self):
+        self._hasReactor = True
+        self._reactorIsFaulty = False
+
+    def setFaultyReactor(self):
+        self._hasReactor = True
+        self._reactorIsFaulty = True
+
+    def hasReactor(self):
+        return self._hasReactor
+
+    def fixReactor(self):
+        if (self.hasReactor() and self.reactorIsFaulty()):
+            self._hasReactor = True
+            self._hasReactor = False
+
+    def reactorIsFaulty(self):
+        return self._reactorIsFaulty
 
     def canGo(self, direction):
         if direction == UP:

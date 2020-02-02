@@ -54,6 +54,7 @@ class TerminalUI(BaseUI):
             print(lines[0])
             print(lines[1])
             print(lines[2])
+        self.renderWinOrLose(game)
         sys.stdout.flush()
 
     def renderCell(self, cell, robot):
@@ -79,14 +80,14 @@ class TerminalUI(BaseUI):
                 line3 = '+'
 
         if cell.canGo(UP):
-            line1 += '   '
+            line1 += '    '
         else:
-            line1 += '---'
+            line1 += '----'
 
         if cell.canGo(DOWN):
-            line3 += '   '
+            line3 += '    '
         else:
-            line3 += '---'
+            line3 += '----'
 
         if (robot):
             line2 += robot.render()
@@ -100,6 +101,11 @@ class TerminalUI(BaseUI):
 
         if (cell.hasRadiation()):
             line2 += 'R'
+        else:
+            line2 += ' '
+
+        if (cell.hasReactor()):
+            line2 += 'Q'
         else:
             line2 += ' '
 
@@ -125,3 +131,9 @@ class TerminalUI(BaseUI):
                 line3 += '+'
 
         return (line1, line2, line3)
+
+    def renderWinOrLose(self, game):
+        if (game.won()):
+            print('You Won!!!')
+        elif (game.lost()):
+            print('You Lost. Game over =(')
