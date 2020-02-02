@@ -8,7 +8,7 @@ class PygameSoundController:
 
 		self.movement_done = Sound("assets/sounds/robot-movement-F.ogg")
 		self.movement_not_allowed = Sound("assets/sounds/robot-movement-C.ogg")
-		self.kill_robot = Sound("assets/sounds/robot-movement-Ab.ogg")
+		self.kill_robot = Sound("assets/sounds/robot-death.ogg")
 
 		self.effect_channel = Channel(1)
 
