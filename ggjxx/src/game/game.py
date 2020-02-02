@@ -2,7 +2,7 @@ from .cell import Cell
 from .constants import UP,DOWN,RIGHT,LEFT
 
 class Map:
-    def __init__(self, w, h, robots, startX,startY):
+    def __init__(self, w, h, robots, startX, startY):
         self.width = w
         self.height = h
         self.robots = robots
@@ -22,6 +22,12 @@ class Map:
     def getCell(self, x, y):
         return self.cells[y][x]
 
+    def getStartingX(self):
+        return self.startX
+
+    def getStartingY(self):
+        return self.startY
+
     def validate_coords(self, x, y):
         assert 0 <= x and x < self.width, "coord x ouf of bounds"
         assert 0 <= y and y < self.height, "coord y out of bounds"
@@ -40,51 +46,39 @@ class Map:
         self.validate_coords(x, y)
         self.cells[y][x] = o
 
-    def has_wall(self, x, y, direction):
-        self.validate_coords(x, y)
-        q = {
-            LEFT: lambda: True if x == 0 else self.v_valls[y][x-1],
-            RIGHT: lambda: True if x == self.width-1 else self.v_valls[y][x],
-            UP: lambda: True if y == 0 else self.h_valls[y-1][x],
-            DOWN: lambda: True if y == self.height-1 else self.v_valls[y][x],
-        }
-        return q[direction]()
-
-    def set_wall(self, x, y, direction, value):
-        self.validate_coords(x, y)
-        q = {
-            LEFT:  (self.v_walls, -1,  0),
-            RIGHT: (self.v_walls,  0,  0),
-            UP:    (self.h_walls,  0, -1),
-            DOWN:  (self.h_walls,  0,  0),
-        }
-        matrix, xoffset, yoffset = q[direction]
-        x_ = x + xoffset
-        y_ = y + yoffset
-
-        if 0 <= x_ and x_ < self.width-1 \
-                and 0 <= y_ and y_ < self.height-1:
-            matrix[y_][x_] = value
-
     def print():
         pass
 
 
 
 class Game:
-    def __init__(self, map_, max_turns):
+    def __init__(self, map_, max_turns, robots):
         self.map = map_
         self.turns_left = max_turns
         self.controlled_robot = None
+        self.robots = robots
+        self.choose_robot(robots[0])
 
-    # def get_robot():
-        # return 
+    def setRobots(self, robots):
+        self.robots = robots
 
     def get_map(self):
         return self.map
 
     def get_controlled_robot(self):
         return self.controlled_robot
+
+    def switchControlledRobot(self):
+        for i in range(len(self.robots)):
+            if self.robots[i].is_being_controlled:
+                pos = i
+                self.robots[i].is_being_controlled = False
+        if pos+1 == len(self.robots):
+            newPos = 0
+        else:
+            newPos = pos+1
+        self.choose_robot(self.robots[newPos])
+
     
     def won(self):
         # check win condition
@@ -110,6 +104,7 @@ class Game:
         r = self.controlled_robot
         if self.map.getCell(r.x, r.y).canGo(LEFT):
             r.x -= 1
+        self.checkHazards(r)
 
     def go_right(self):
         if not self.is_robot_being_controlled():
@@ -118,6 +113,7 @@ class Game:
         r = self.controlled_robot
         if self.map.getCell(r.x, r.y).canGo(RIGHT):
             r.x += 1
+        self.checkHazards(r)
 
     def go_down(self):
         if not self.is_robot_being_controlled():
@@ -126,6 +122,7 @@ class Game:
         r = self.controlled_robot
         if self.map.getCell(r.x, r.y).canGo(DOWN):
             r.y += 1
+        self.checkHazards(r)
 
     def go_up(self):
         if not self.is_robot_being_controlled():
@@ -134,6 +131,38 @@ class Game:
         r = self.controlled_robot
         if self.map.getCell(r.x, r.y).canGo(UP):
             r.y -= 1
+        self.checkHazards(r)
+
+    def checkHazards(self, robot):
+        xPosition = robot.getX()
+        yPosition = robot.getY()
+        currentCell = self.map.getCell(robot.getX(), robot.getY())
+        cells = self.getAdjacentCells(xPosition, yPosition)
+        for cell in cells:
+            if cell.hasRadiation():
+                robot.interactWithRadiation(self,currentCell)
+            if cell.hasFire():
+                robot.interactWithFire(self, currentCell)
+
+
+    def getAdjacentCells(self,x,y):
+        center = self.map.getCell(x,y)
+        allCells = [center]
+        minX = max(x-1,0)
+        maxX = min(x+1,self.map.getWidth()-1)
+        minY = max(y-1,0)
+        maxY = min(y+1,self.map.getHeight()-1)
+
+        for _x in range(minX,maxX+1):
+            for _y in range (minY,maxY+1):
+                allCells.append(self.map.getCell(_x,_y))
+
+        return allCells
+
+    def killRobot(self, robot):
+        robot.setX(self.map.getStartingX())
+        robot.setY(self.map.getStartingY())
+
 
     def robot_action(self):
         pass
@@ -174,3 +203,17 @@ class Robot:
 
     def setY(self, _y):
         self.y = _y
+
+    def interactWithRadiation(self, game, cell):
+        game.killRobot(self)
+
+    def interactWithFire(self, game, cell):
+        game.killRobot(self)
+
+class FireFighter(Robot):
+    def interactWithFire(self, game, cell):
+        cell.putOutFire()
+
+class RadiationFighter(Robot):
+    def interactWithRadiation(self, game, cell):
+        cell.putOutRadiation()

@@ -1,4 +1,4 @@
-from ..game.game import Game, Map, Robot
+from ..game.game import Game, Map, Robot, FireFighter, RadiationFighter
 from ..game.constants import *
 from ..input.getch import _Getch
 
@@ -113,7 +113,7 @@ class Tui:
         return (line1, line2, line3)
 
     def initGame(self):
-        robots = [Robot(1, 2)]
+        robots = [Robot(1, 2), FireFighter(0,7), RadiationFighter(7,0)]
         map = Map(8, 8, robots, 0,7)
         map.get_cell(0,0).setAvailableDirections([DOWN])
         map.get_cell(0,1).setAvailableDirections([DOWN,UP])
@@ -126,7 +126,7 @@ class Tui:
         map.get_cell(1,0).setAvailableDirections([DOWN])
         map.get_cell(1,1).setAvailableDirections([UP,RIGHT])
         map.get_cell(1,2).setAvailableDirections([RIGHT,LEFT])
-        map.get_cell(1,3).setAvailableDirections([RIGHT,LEFT,DOWN])
+        map.get_cell(1,3).setAvailableDirections([LEFT,DOWN])
         map.get_cell(1,4).setAvailableDirections([UP,DOWN,RIGHT,LEFT])
         map.get_cell(1,5).setAvailableDirections([UP,DOWN,LEFT])
         map.get_cell(1,6).setAvailableDirections([UP,RIGHT])
@@ -134,7 +134,7 @@ class Tui:
         map.get_cell(2,0).setAvailableDirections([DOWN])
         map.get_cell(2,1).setAvailableDirections([UP,DOWN,LEFT])
         map.get_cell(2,2).setAvailableDirections([UP,DOWN,LEFT])
-        map.get_cell(2,3).setAvailableDirections([UP,RIGHT,LEFT])
+        map.get_cell(2,3).setAvailableDirections([UP,RIGHT])
         map.get_cell(2,4).setAvailableDirections([LEFT,DOWN])
         map.get_cell(2,5).setAvailableDirections([UP,DOWN])
         map.get_cell(2,6).setAvailableDirections([UP,DOWN,LEFT])
@@ -191,8 +191,8 @@ class Tui:
         map.get_cell(6,1).putRadiation()
 
         max_turns = 10
-        self.gameState = Game(map, max_turns)
-        self.gameState.choose_robot(robots[0])
+        self.gameState = Game(map, max_turns, robots)
+        self.gameState.setRobots(robots)
 
     def updateGame(self):
         self.applyActionByInput()
@@ -211,4 +211,6 @@ class Tui:
             self.gameState.go_left()
         if (key_pressed == QUIT_KEY_CHAR):
             self.gameState.terminate()
+        if (key_pressed == CHANGE_ROBOT_KEY):
+            self.gameState.switchControlledRobot()
 
