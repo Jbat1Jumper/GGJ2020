@@ -53,14 +53,41 @@ class GraphicsUI(BaseUI):
                     return ACTION_ROTATE_ROBOT
                 elif event.unicode == QUIT_KEY_CHAR:
                     return ACTION_QUIT
+
+                elif event.unicode == 'u':
+                    print (WallOffsets.WALL_V_X_OFFSET)
+                    WallOffsets.WALL_V_X_OFFSET += 1
+                elif event.unicode == 'j':
+                    print (WallOffsets.WALL_V_X_OFFSET)
+                    WallOffsets.WALL_V_X_OFFSET -= 1
+                elif event.unicode == 'i':
+                    print (WallOffsets.WALL_V_Y_OFFSET)
+                    WallOffsets.WALL_V_Y_OFFSET += 1
+                elif event.unicode == 'k':
+                    print (WallOffsets.WALL_V_Y_OFFSET)
+                    WallOffsets.WALL_V_Y_OFFSET -= 1
+
+                elif event.unicode == 'o':
+                    print (WallOffsets.WALL_H_X_OFFSET)
+                    WallOffsets.WALL_H_X_OFFSET += 1
+                elif event.unicode == 'l':
+                    print (WallOffsets.WALL_H_X_OFFSET)
+                    WallOffsets.WALL_H_X_OFFSET -= 1
+                elif event.unicode == 'p':
+                    print (WallOffsets.WALL_H_Y_OFFSET)
+                    WallOffsets.WALL_H_Y_OFFSET += 1
+                elif event.unicode == ';':
+                    print (WallOffsets.WALL_H_Y_OFFSET)
+                    WallOffsets.WALL_H_Y_OFFSET -= 1
                 else:
                     print("unknown key: " + event.unicode)
+                sys.stdout.flush()
 
     def draw_robot_phase(self, game):
-        m = game.get_map()
-        self.draw_map(m)
+        self.draw_map(game)
     
-    def draw_map(self, m):
+    def draw_map(self, game):
+        m = game.get_map()
         for y in range(m.height):
             for x in range(m.width):
                 # floor
@@ -69,21 +96,29 @@ class GraphicsUI(BaseUI):
         for y in range(m.height):
             for x in range(m.width):
                 c = m.get_cell(x, y)
-                self.draw_walls(c, x, y)
-                self.draw_hazards(c, x, y)
+                self.draw_hazards(c, x, y, game)
                 self.draw_robot(c, x, y, m.get_robots())
+                self.draw_walls(c, x, y)
 
     def draw_walls(self, cell, x, y):
         if x == 0:
-            self.screen.blit(self.assets.wall_v, (x * TILE_SIZE - WALL_WIDTH/2, y * TILE_SIZE - WALL_VERTICAL_OFFSET))
+            self.screen.blit(self.assets.wall_v, (x * TILE_SIZE - WallOffsets.WALL_V_X_OFFSET, y * TILE_SIZE - WallOffsets.WALL_V_Y_OFFSET))
         if y == 0:
-            self.screen.blit(self.assets.wall_h, (x * TILE_SIZE - WALL_WIDTH/2, y * TILE_SIZE - WALL_VERTICAL_OFFSET))
+            self.screen.blit(self.assets.wall_h, (x * TILE_SIZE - WallOffsets.WALL_H_X_OFFSET, y * TILE_SIZE - WallOffsets.WALL_H_Y_OFFSET))
         if not cell.canGo(RIGHT):
-            self.screen.blit(self.assets.wall_v, ((x+1) * TILE_SIZE - WALL_WIDTH/2, y * TILE_SIZE - WALL_VERTICAL_OFFSET))
+            self.screen.blit(self.assets.wall_v, ((x+1) * TILE_SIZE - WallOffsets.WALL_V_X_OFFSET, y * TILE_SIZE - WallOffsets.WALL_V_Y_OFFSET))
         if not cell.canGo(DOWN):
-            self.screen.blit(self.assets.wall_h, (x * TILE_SIZE - WALL_WIDTH/2, (y+1) * TILE_SIZE - WALL_VERTICAL_OFFSET))
+            self.screen.blit(self.assets.wall_h, (x * TILE_SIZE - WallOffsets.WALL_H_X_OFFSET, (y+1) * TILE_SIZE - WallOffsets.WALL_H_Y_OFFSET))
         
-    def draw_hazards(self, cell, x, y):
+    def draw_hazards(self, cell, x, y, game):
+
+        adjacent_cells = game.getAdjacentCells(x, y)
+
+        if [c for c in adjacent_cells if c.hasRadiation()]:
+            self.screen.blit(self.frame(self.assets.puddle), (x * TILE_SIZE, y * TILE_SIZE))
+
+        if [c for c in adjacent_cells if c.hasFire()]:
+            self.screen.blit(self.frame(self.assets.electricity), (x * TILE_SIZE, y * TILE_SIZE))
 
         if cell.hasRadiation():
             self.screen.blit(self.assets.pipe, (x * TILE_SIZE, y * TILE_SIZE))
