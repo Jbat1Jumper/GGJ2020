@@ -120,10 +120,15 @@ class GraphicsUI(BaseUI):
         if [c for c in adjacent_cells if c.hasFire()]:
             self.screen.blit(self.frame(self.assets.electricity), (x * TILE_SIZE, y * TILE_SIZE))
 
-        if cell.hasRadiation():
-            self.screen.blit(self.assets.pipe, (x * TILE_SIZE, y * TILE_SIZE))
-        elif cell.hadRadiation:
-            self.screen.blit(self.assets.pipe_fixed, (x * TILE_SIZE, y * TILE_SIZE))
+        if cell.hasReactor() and cell.reactorIsFaulty():
+            self.screen.blit(self.assets.reactor, (x * TILE_SIZE, y * TILE_SIZE))
+        elif cell.hasReactor() and not cell.reactorIsFaulty():
+            self.screen.blit(self.assets.reactor_fixed, (x * TILE_SIZE, y * TILE_SIZE))
+        else:
+            if cell.hasRadiation():
+                self.screen.blit(self.assets.pipe, (x * TILE_SIZE, y * TILE_SIZE))
+            elif cell.hadRadiation:
+                self.screen.blit(self.assets.pipe_fixed, (x * TILE_SIZE, y * TILE_SIZE))
         
         if cell.hasFire():
             self.screen.blit(self.assets.fire, (x * TILE_SIZE, y * TILE_SIZE))

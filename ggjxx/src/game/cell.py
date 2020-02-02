@@ -49,7 +49,7 @@ class Cell:
     def fixReactor(self):
         if (self.hasReactor() and self.reactorIsFaulty()):
             self._hasReactor = True
-            self._hasReactor = False
+            self._reactorIsFaulty = False
 
     def reactorIsFaulty(self):
         return self._reactorIsFaulty
