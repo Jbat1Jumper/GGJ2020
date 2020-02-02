@@ -50,6 +50,7 @@ class Cell:
         if (self.hasReactor() and self.reactorIsFaulty()):
             self._hasReactor = True
             self._reactorIsFaulty = False
+            # print('reactor fixed')
 
     def reactorIsFaulty(self):
         return self._reactorIsFaulty

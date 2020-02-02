@@ -86,6 +86,6 @@ class Level1(BaseLevel):
         self.map.get_cell(3,3).setWorkingReactor()
         self.map.get_cell(7,0).setFaultyReactor()
 
-        self.max_turns = 30
+        self.max_turns = 40
         # self.gameState = Game(map, max_turns, robots)
         # self.gameState.setRobots(robots)

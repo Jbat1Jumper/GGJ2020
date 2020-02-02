@@ -41,11 +41,16 @@ class Game:
 
     
     def won(self):
+        return self._won
+
+    def checkWin(self):
         if (self._won):
+            # print('Already won!')
             return True
         if self.everyReactorHasBeenRepaired():
             self.turns_left = 0
             self._won = True
+            # print('won!!')
             return True
         return False
 
@@ -65,6 +70,11 @@ class Game:
     def is_robot_being_controlled(self):
         return self.controlled_robot != None
 
+    def processTurnAfterMove(self, robot):
+        self.consumeTurn()
+        self.checkHazards(robot)
+        self.checkWin()
+
     def go_left(self):
         if not self.is_robot_being_controlled():
             return
@@ -77,8 +87,7 @@ class Game:
         else:
             self.trigger_event(MOVEMENT_NOT_ALLOWED)
 
-        self.consumeTurn()
-        self.checkHazards(r)
+        self.processTurnAfterMove(r)
 
     def go_right(self):
         if not self.is_robot_being_controlled():
@@ -92,8 +101,7 @@ class Game:
         else:
             self.trigger_event(MOVEMENT_NOT_ALLOWED)
 
-        self.consumeTurn()
-        self.checkHazards(r)
+        self.processTurnAfterMove(r)
 
     def go_down(self):
         if not self.is_robot_being_controlled():
@@ -107,8 +115,7 @@ class Game:
         else:
             self.trigger_event(MOVEMENT_NOT_ALLOWED)
 
-        self.consumeTurn()
-        self.checkHazards(r)
+        self.processTurnAfterMove(r)
 
     def go_up(self):
         if not self.is_robot_being_controlled():
@@ -122,8 +129,7 @@ class Game:
         else:
             self.trigger_event(MOVEMENT_NOT_ALLOWED)
 
-        self.consumeTurn()
-        self.checkHazards(r)
+        self.processTurnAfterMove(r)
 
     def consumeTurn(self):
         self.turns_left = self.turns_left - 1
