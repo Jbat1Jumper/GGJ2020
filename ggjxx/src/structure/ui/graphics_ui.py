@@ -114,7 +114,7 @@ class GraphicsUI(BaseUI):
         display_surface = self.screen
 
 
-        font = pygame.font.Font('freesansbold.ttf', 28)
+        font = self.assets.font
 
         text = font.render('Turnos: ' + str(game.turns_left), True, white, black)
 

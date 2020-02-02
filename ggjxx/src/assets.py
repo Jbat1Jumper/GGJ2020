@@ -44,6 +44,7 @@ class Assets:
         self.light = self.load_animation("assets/placeholders/light#.png", 1, 5)
         self.puddle = self.load_animation("assets/floor_radioactive_goop.png", 1, 1)
         self.electricity = self.load_animation("assets/floor_electric_f#.png", 1, 2)
+        self.font = pygame.font.Font("assets/arial.ttf", 28)
 
     def load_animation(self, filename, start, frames):
         sprites = []
