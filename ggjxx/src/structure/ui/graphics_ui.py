@@ -188,7 +188,8 @@ class GraphicsUI(BaseUI):
                 self.screen.blit(self.frame(self.assets.light), (x*TILE_SIZE, y*TILE_SIZE))
 
     def draw_fow(self, cell, x, y):
-        pass
+        rect = pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+        pygame.draw.rect(self.screen, [0, 0, 0], rect)
 
     def get_selection_input(self):
         for event in pygame.event.get():

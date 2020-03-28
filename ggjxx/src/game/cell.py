@@ -19,6 +19,9 @@ class Cell:
     def hasFow(self):
         return self._hasFow
 
+    def disableFow(self):
+        self._hasFow = False
+
     def hasFire(self):
         return self._hasFire
 

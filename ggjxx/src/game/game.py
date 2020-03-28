@@ -195,4 +195,13 @@ class Game:
         self.listeners.append(listener)
 
     def update(self):
-        self.map.update_fow()
+        self.update_fow()
+
+    def update_fow(self):
+        for robot in self.map.robots:
+            x = robot.getX()
+            y = robot.getY()
+
+            self.map.get_cell(x, y).disableFow()
+            for cell in self.getAdjacentCells(x, y):
+                cell.disableFow()
