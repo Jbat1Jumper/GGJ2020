@@ -28,8 +28,8 @@ class Map:
         return self.startY
 
     def validate_coords(self, x, y):
-        assert 0 <= x and x < self.width, "coord x ouf of bounds"
-        assert 0 <= y and y < self.height, "coord y out of bounds"
+        assert 0 <= x and x < self.width, "coord x ouf of bounds: {}".format(x)
+        assert 0 <= y and y < self.height, "coord y out of bounds: {}".format(y)
 
     def is_border(self, x, y):
         return x == 0 \
@@ -51,3 +51,19 @@ class Map:
                 if (cell.hasReactor() and cell.reactorIsFaulty()):
                     return True
         return False
+
+    def update_fow(self):
+        for robot in self.robots:
+            x = robot.getX()
+            y = robot.getY()
+
+            self.get_cell(x, y)._hasFow = False
+            if x > 0:
+                self.get_cell(x-1, y)._hasFow = False
+            if x + 1 < self.width:
+                self.get_cell(x+1, y)._hasFow = False
+            if y > 0:
+                self.get_cell(x, y-1)._hasFow = False
+            if y + 1 < self.height:
+                self.get_cell(x, y+1)._hasFow = False
+            

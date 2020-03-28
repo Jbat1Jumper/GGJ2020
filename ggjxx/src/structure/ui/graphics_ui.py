@@ -100,9 +100,12 @@ class GraphicsUI(BaseUI):
         for y in range(m.height):
             for x in range(m.width):
                 c = m.get_cell(x, y)
-                self.draw_hazards(c, x, y, game)
-                self.draw_robot(c, x, y, m.get_robots())
-                self.draw_walls(c, x, y)
+                if c.hasFow():
+                    self.draw_fow(c, x, y)
+                else:
+                    self.draw_hazards(c, x, y, game)
+                    self.draw_robot(c, x, y, m.get_robots())
+                    self.draw_walls(c, x, y)
 
     def draw_turns_left(self, game):
 
@@ -184,6 +187,8 @@ class GraphicsUI(BaseUI):
             if r.is_being_controlled:
                 self.screen.blit(self.frame(self.assets.light), (x*TILE_SIZE, y*TILE_SIZE))
 
+    def draw_fow(self, cell, x, y):
+        pass
 
     def get_selection_input(self):
         for event in pygame.event.get():

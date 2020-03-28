@@ -14,6 +14,10 @@ class Cell:
         self._hasReactor = False
         self._hadReactor = False
         self._reactorIsFaulty = False
+        self._hasFow = True
+
+    def hasFow(self):
+        return self._hasFow
 
     def hasFire(self):
         return self._hasFire

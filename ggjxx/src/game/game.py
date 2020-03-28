@@ -193,3 +193,6 @@ class Game:
         if not hasattr(listener, "trigger"):
             return
         self.listeners.append(listener)
+
+    def update(self):
+        self.map.update_fow()
