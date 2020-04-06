@@ -100,8 +100,8 @@ class GraphicsUI(BaseUI):
         for y in range(m.height):
             for x in range(m.width):
                 c = m.get_cell(x, y)
-                if c.hasFow():
-                    self.draw_fow(c, x, y)
+                if c.hasFog():
+                    self.draw_fog(c, x, y)
                 else:
                     self.draw_hazards(c, x, y, game)
                     self.draw_robot(c, x, y, m.get_robots())
@@ -187,7 +187,7 @@ class GraphicsUI(BaseUI):
             if r.is_being_controlled:
                 self.screen.blit(self.frame(self.assets.light), (x*TILE_SIZE, y*TILE_SIZE))
 
-    def draw_fow(self, cell, x, y):
+    def draw_fog(self, cell, x, y):
         rect = pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
         pygame.draw.rect(self.screen, [0, 0, 0], rect)
 

@@ -14,13 +14,13 @@ class Cell:
         self._hasReactor = False
         self._hadReactor = False
         self._reactorIsFaulty = False
-        self._hasFow = True
+        self._hasFog = True
 
-    def hasFow(self):
-        return self._hasFow
+    def hasFog(self):
+        return self._hasFog
 
-    def disableFow(self):
-        self._hasFow = False
+    def disableFog(self):
+        self._hasFog = False
 
     def hasFire(self):
         return self._hasFire
