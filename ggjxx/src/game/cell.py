@@ -14,6 +14,13 @@ class Cell:
         self._hasReactor = False
         self._hadReactor = False
         self._reactorIsFaulty = False
+        self._hasFog = True
+
+    def hasFog(self):
+        return self._hasFog
+
+    def disableFog(self):
+        self._hasFog = False
 
     def hasFire(self):
         return self._hasFire

@@ -8,15 +8,17 @@ class GameActionInterpreter():
 	def applyAction(self, game, action):
 		if (action == ACTION_GO_UP):
 			game.go_up()
-		if (action == ACTION_GO_DOWN):
+		elif (action == ACTION_GO_DOWN):
 			game.go_down()
-		if (action == ACTION_GO_LEFT):
+		elif (action == ACTION_GO_LEFT):
 			game.go_left()
-		if (action == ACTION_GO_RIGHT):
+		elif (action == ACTION_GO_RIGHT):
 			game.go_right()
-		if (action == ACTION_ROTATE_ROBOT):
+		elif (action == ACTION_ROTATE_ROBOT):
 			game.switchControlledRobot()
-		if (action == ACTION_QUIT):
+		elif (action == ACTION_QUIT):
 			game.terminate()
-		if (action == ACTION_RESTART):
+		elif (action == ACTION_RESTART):
 			game.restart()
+		elif action:
+			print("Unknown aktion: {}".format(action))

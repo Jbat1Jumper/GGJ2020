@@ -10,6 +10,7 @@ class GameController():
 		self.game.restart()
 		self.ui.render(self.game)
 		while (not self.game.finished()):
+			self.game.update()
 			action = self.ui.getInput()
 			self.gameActionInterpreter.applyAction(self.game, action)
 			self.ui.render(self.game)

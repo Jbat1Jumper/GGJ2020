@@ -28,8 +28,8 @@ class Map:
         return self.startY
 
     def validate_coords(self, x, y):
-        assert 0 <= x and x < self.width, "coord x ouf of bounds"
-        assert 0 <= y and y < self.height, "coord y out of bounds"
+        assert 0 <= x and x < self.width, "coord x ouf of bounds: {}".format(x)
+        assert 0 <= y and y < self.height, "coord y out of bounds: {}".format(y)
 
     def is_border(self, x, y):
         return x == 0 \

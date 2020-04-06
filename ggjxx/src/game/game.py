@@ -193,3 +193,15 @@ class Game:
         if not hasattr(listener, "trigger"):
             return
         self.listeners.append(listener)
+
+    def update(self):
+        self.update_fog()
+
+    def update_fog(self):
+        for robot in self.map.robots:
+            x = robot.getX()
+            y = robot.getY()
+
+            self.map.get_cell(x, y).disableFog()
+            for cell in self.getAdjacentCells(x, y):
+                cell.disableFog()
