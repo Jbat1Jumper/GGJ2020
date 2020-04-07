@@ -27,7 +27,8 @@ jobs:
       run: pip install -r requirements.txt
 
     # Runs a set of commands using the runners shell
-    - name: Build
-      run: |
-	chmod +x make_exe.sh
-	./make_exe.sh
+    - name: Chmod
+      run: chmod +x make_exe.sh
+
+    - name: build
+      run: ./make_exe.sh
