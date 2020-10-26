@@ -1,5 +1,5 @@
 from .cell import Cell
-from .constants import UP,DOWN,RIGHT,LEFT, MOVEMENT_NOT_ALLOWED, MOVEMENT_DONE, KILL_ROBOT
+from .constants import UP, DOWN, RIGHT, LEFT, MOVEMENT_NOT_ALLOWED, MOVEMENT_DONE, KILL_ROBOT
 from ..structure.levels.base_level import BaseLevel
 from .map import Map
 from copy import deepcopy
@@ -11,7 +11,6 @@ class Game:
         self.listeners = []
 
     def restart(self):
-        print('restarted')
         gameLevel = deepcopy(self.initialGameLevel)
         self.map = gameLevel.getMap()
         self.turns_left = gameLevel.getMaxTurns()
@@ -45,12 +44,10 @@ class Game:
 
     def checkWin(self):
         if (self._won):
-            # print('Already won!')
             return True
         if self.everyReactorHasBeenRepaired():
             self.turns_left = 0
             self._won = True
-            # print('won!!')
             return True
         return False
 
@@ -58,7 +55,7 @@ class Game:
         return not self.map.hasFaultyReactor()
 
     def lost(self):
-        return self.turns_left <= 0
+        return self.turns_left <= 0 and not self._won
 
     def available_robots(self):
         return filter(lambda r: not r.busy, self.map.get_robots())
@@ -75,61 +72,31 @@ class Game:
         self.checkHazards(robot)
         self.checkWin()
 
-    def go_left(self):
+    def go(self, direction):
         if not self.is_robot_being_controlled():
             return
 
         r = self.controlled_robot
-        r.direction = LEFT
-        if self.map.getCell(r.x, r.y).canGo(LEFT):
-            r.x -= 1
-            self.trigger_event(MOVEMENT_DONE)
-        else:
+        if not self.map.getCell(r.x, r.y).canGo(direction) or not self.turns_left > 0:
             self.trigger_event(MOVEMENT_NOT_ALLOWED)
+            return
 
+        r.direction = direction
+        r.advance()
+        self.trigger_event(MOVEMENT_DONE)
         self.processTurnAfterMove(r)
+
+    def go_left(self):
+        self.go(LEFT)
 
     def go_right(self):
-        if not self.is_robot_being_controlled():
-            return
-
-        r = self.controlled_robot
-        r.direction = RIGHT
-        if self.map.getCell(r.x, r.y).canGo(RIGHT):
-            r.x += 1
-            self.trigger_event(MOVEMENT_DONE)
-        else:
-            self.trigger_event(MOVEMENT_NOT_ALLOWED)
-
-        self.processTurnAfterMove(r)
+        self.go(RIGHT)
 
     def go_down(self):
-        if not self.is_robot_being_controlled():
-            return
-
-        r = self.controlled_robot
-        r.direction = DOWN
-        if self.map.getCell(r.x, r.y).canGo(DOWN):
-            r.y += 1
-            self.trigger_event(MOVEMENT_DONE)
-        else:
-            self.trigger_event(MOVEMENT_NOT_ALLOWED)
-
-        self.processTurnAfterMove(r)
+        self.go(DOWN)
 
     def go_up(self):
-        if not self.is_robot_being_controlled():
-            return
-
-        r = self.controlled_robot
-        r.direction = UP
-        if self.map.getCell(r.x, r.y).canGo(UP):
-            r.y -= 1
-            self.trigger_event(MOVEMENT_DONE)
-        else:
-            self.trigger_event(MOVEMENT_NOT_ALLOWED)
-
-        self.processTurnAfterMove(r)
+        self.go(UP)
 
     def consumeTurn(self):
         self.turns_left = self.turns_left - 1
@@ -175,15 +142,11 @@ class Game:
         self.controlled_robot.is_being_controlled = False
         self.controlled_robot = None
 
-    def willShutdown(self):
-        return self.turns_left < 0
-
     def terminate(self):
-        exit()
         self.turns_left = -1
 
     def finished(self):
-        return self.willShutdown()
+        return self.turns_left <= 0
 
     def trigger_event(self, event):
         for listener in self.listeners:

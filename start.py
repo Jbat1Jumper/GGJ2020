@@ -23,7 +23,7 @@ def tui():
 
     ui = TerminalUI()
 
-    gameActionInterpreter = GameActionInterpreter()
+    gameActionInterpreter = GameActionInterpreter(game)
 
     gameController = GameController(game, ui, gameActionInterpreter)
     gameController.run()
@@ -36,7 +36,7 @@ def gui():
 
     ui = GraphicsUI()
 
-    gameActionInterpreter = GameActionInterpreter()
+    gameActionInterpreter = GameActionInterpreter(game)
 
     soundController = PygameSoundController()
     game.subscribe(soundController)

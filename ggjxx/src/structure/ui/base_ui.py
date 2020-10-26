@@ -7,3 +7,9 @@ class BaseUI():
 
 	def render(self, game):
 		pass
+
+	def shouldTerminate(self, game):
+		return game.finished()
+
+	def applyAction(self, game):
+		return False

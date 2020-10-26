@@ -7,3 +7,6 @@ ACTION_ROTATE_ROBOT = 'rotate_robot'
 ACTION_RESTART = 'restart'
 
 ACTION_QUIT = 'quit'
+
+ACTION_DIALOG_CONFIRM = 'confirm_dialog'
+ACTION_DIALOG_CANCEL = 'cancel_dialog'

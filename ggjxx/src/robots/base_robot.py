@@ -28,6 +28,16 @@ class BaseRobot:
     def setY(self, _y):
         self.y = _y
 
+    def advance(self):
+        if self.direction == LEFT:
+            self.x -= 1
+        elif self.direction == RIGHT:
+            self.x += 1
+        elif self.direction == DOWN:
+            self.y += 1
+        elif self.direction == UP:
+            self.y -= 1
+
     def resetPosition(self):
         self.setX(self.initX)
         self.setY(self.initY)

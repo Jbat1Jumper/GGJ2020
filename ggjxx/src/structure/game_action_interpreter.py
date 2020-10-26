@@ -2,23 +2,32 @@ from .action_constants import *
 from ..game.game import Game
 
 class GameActionInterpreter():
-	def __init__(self):
-		pass
+	def __init__(self, game):
+		self.game = game
 
-	def applyAction(self, game, action):
+	def applyAction(self, action):
 		if (action == ACTION_GO_UP):
-			game.go_up()
+			self.game.go_up()
+			return True
 		elif (action == ACTION_GO_DOWN):
-			game.go_down()
+			self.game.go_down()
+			return True
 		elif (action == ACTION_GO_LEFT):
-			game.go_left()
+			self.game.go_left()
+			return True
 		elif (action == ACTION_GO_RIGHT):
-			game.go_right()
+			self.game.go_right()
+			return True
 		elif (action == ACTION_ROTATE_ROBOT):
-			game.switchControlledRobot()
+			self.game.switchControlledRobot()
+			return True
 		elif (action == ACTION_QUIT):
-			game.terminate()
+			self.game.terminate()
+			return True
 		elif (action == ACTION_RESTART):
-			game.restart()
+			self.game.restart()
+			return True
 		elif action:
 			print("Unknown aktion: {}".format(action))
+
+		return False

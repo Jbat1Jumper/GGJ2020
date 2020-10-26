@@ -17,11 +17,13 @@ class GraphicsUI(BaseUI):
         self.current_frame = 0
         pygame.display.set_caption('Robot Meltdown')
 
+        self.wait_for_exit = False
+        self.should_terminate = False
+
     def getInput(self):
-        # if self.game.is_robot_being_controlled():
+        if self.wait_for_exit:
+            return self.get_dialog_input()
         return self.get_robot_input()
-        # else:
-        #     self.draw_selection()
 
     def render(self, game):
         self.screen.fill((0, 0, 0))
@@ -30,16 +32,38 @@ class GraphicsUI(BaseUI):
             self.draw_robot_phase(game)
         else:
             self.draw_selection()
+
+        if self.wait_for_exit:
+            self.draw_confirmation_dialog(game)
             
         pygame.display.flip()
         self.current_frame += 1
         self.clock.tick(30)
 
+    def applyAction(self, action):
+        if action == ACTION_QUIT:
+            self.wait_for_exit = True
+            return True
+
+        if action == ACTION_DIALOG_CONFIRM:
+            self.should_terminate = True
+            return True
+
+        if action == ACTION_DIALOG_CANCEL:
+            self.wait_for_exit = False
+            return True
+
+    def get_dialog_input(self):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.unicode == CHANGE_ROBOT_KEY:
+                    return ACTION_DIALOG_CONFIRM
+                if event.unicode == QUIT_KEY_CHAR:
+                    return ACTION_DIALOG_CANCEL
+
     def get_robot_input(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                print("event quit")
-                sys.exit()
                 return ACTION_QUIT
             elif event.type == pygame.KEYDOWN:
                 if event.unicode == UP_KEY_CHAR:
@@ -88,6 +112,8 @@ class GraphicsUI(BaseUI):
 
     def draw_robot_phase(self, game):
         self.draw_turns_left(game)
+        if game.finished():
+            self.draw_game_finished(game)
         self.draw_map(game)
     
     def draw_map(self, game):
@@ -108,26 +134,31 @@ class GraphicsUI(BaseUI):
                     self.draw_walls(c, x, y)
 
     def draw_turns_left(self, game):
-
         white = (255, 255, 255)
         green = (0, 255, 0)
         blue = (0, 0, 128)
         black = (0, 0, 0)
 
         display_surface = self.screen
-
-
         font = self.assets.font
-
         text = font.render('Turnos: ' + str(game.turns_left), True, white, black)
-
         textRect = text.get_rect()
-
         textRect.center = (game.get_map().width * TILE_SIZE + 100, 50)
-
         display_surface.blit(text, textRect)
 
+    def draw_game_finished(self,game):
+        white = (255, 255, 255)
+        green = (0, 255, 0)
+        blue = (0, 0, 128)
+        black = (0, 0, 0)
 
+        display_surface = self.screen
+        font = self.assets.font
+        text = "Has ganado" if game.won() else "LoSeR"
+        text = font.render(text, True, white, black)
+        textRect = text.get_rect()
+        textRect.center = (game.get_map().width * TILE_SIZE + 100, 100)
+        display_surface.blit(text, textRect)
 
 
 
@@ -204,3 +235,20 @@ class GraphicsUI(BaseUI):
 
     def teardown(self):
         pass
+
+    def draw_confirmation_dialog(self, game):
+        white = (255, 255, 255)
+        gray = (90, 90, 90)
+        black = (0, 0, 0)
+
+        display_surface = self.screen
+        font = self.assets.font
+        text = font.render('Presione espacio para salir', True, white, black)
+        textRect = text.get_rect()
+        textRect.center = (self.viewport.width / 2, self.viewport.height / 2)
+        backgroundRect = textRect.inflate(1, 3)
+        display_surface.fill(gray, backgroundRect)
+        display_surface.blit(text, textRect)
+
+    def shouldTerminate(self, game):
+        return self.wait_for_exit and self.should_terminate
