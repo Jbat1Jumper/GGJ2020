@@ -105,7 +105,7 @@ class Game:
         xPosition = robot.getX()
         yPosition = robot.getY()
         currentCell = self.map.getCell(robot.getX(), robot.getY())
-        cells = self.getAdjacentCells(xPosition, yPosition)
+        cells = self.map.getAdjacentCells(xPosition, yPosition)
         for cell in cells:
             if cell.hasRadiation():
                 robot.interactWithRadiation(self, currentCell)
@@ -114,21 +114,6 @@ class Game:
             if cell.hasReactor():
                 robot.interactWithReactor(self, currentCell)
 
-
-    def getAdjacentCells(self,x,y):
-        center = self.map.getCell(x,y)
-        allCells = [center]
-        
-        if (center.canGo(UP)):
-            allCells.append(self.map.getCell(x, y-1))
-        if (center.canGo(DOWN)):
-            allCells.append(self.map.getCell(x, y+1))
-        if (center.canGo(LEFT)):
-            allCells.append(self.map.getCell(x-1, y))
-        if (center.canGo(RIGHT)):
-            allCells.append(self.map.getCell(x+1, y))
-
-        return allCells
 
     def killRobot(self, robot):
         robot.resetPosition()
@@ -165,6 +150,8 @@ class Game:
             x = robot.getX()
             y = robot.getY()
 
-            self.map.get_cell(x, y).disableFog()
-            for cell in self.getAdjacentCells(x, y):
+            for cell in self.map.getAdjacentCells(x, y):
                 cell.disableFog()
+
+    def getAdjacentCells(self,x,y):
+        return self.map.getAdjacentCells(x,y)

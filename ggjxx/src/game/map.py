@@ -51,3 +51,40 @@ class Map:
                 if (cell.hasReactor() and cell.reactorIsFaulty()):
                     return True
         return False
+
+    def getAdjacentCells(self,x,y):
+        from .constants import UP,DOWN,RIGHT,LEFT
+        result = [self.getCell(x,y)]
+        
+        if (self.canGo(UP,x,y)):
+            result.append(self.getCell(x, y-1))
+        if (self.canGo(DOWN,x,y)):
+            result.append(self.getCell(x, y+1))
+        if (self.canGo(LEFT,x,y)):
+            result.append(self.getCell(x-1, y))
+        if (self.canGo(RIGHT,x,y)):
+            result.append(self.getCell(x+1, y))
+
+        return result
+
+
+    def canGo(self, direction, x, y):
+        cell = self.getCell(x,y)
+        return self.checkLimits(direction, x, y) and cell.canGo(direction)
+
+    def checkLimits(self, direction, x, y):
+        from .constants import UP,DOWN,RIGHT,LEFT
+        v = None
+        if direction == UP:
+            v = (0,-1)
+        if direction == DOWN:
+            v = (0,1)
+        if direction == LEFT:
+            v = (-1,0)
+        if direction == RIGHT:
+            v = (1,0)
+
+        cx = 0 <= x + v[0] < self.width
+        cy = 0 <= y + v[1] < self.height
+
+        return cx and cy

@@ -57,7 +57,6 @@ class Cell:
         if (self.hasReactor() and self.reactorIsFaulty()):
             self._hasReactor = True
             self._reactorIsFaulty = False
-            # print('reactor fixed')
 
     def reactorIsFaulty(self):
         return self._reactorIsFaulty
@@ -88,3 +87,4 @@ class Cell:
                 self._canGoLeft = True
             if direction == RIGHT:
                 self._canGoRight = True
+
